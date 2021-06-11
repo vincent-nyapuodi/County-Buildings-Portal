@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue"
+    android:orientation="vertical"
+    tools:context=".fragments.AddBuilding4Fragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_9"
+        android:padding="@dimen/padding"
+        android:text="Building Contractors Details"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_large"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/top_corner_round"
+        android:orientation="vertical"
+        android:padding="@dimen/padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_1"
+            android:text="Architect Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium_small"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_2"
+            android:text="Plan, design and document building project"
+            android:textColor="@color/darkgray"
+            android:textSize="@dimen/text_small"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/txt_architectname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_2"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_1"
+            android:text="Supervisor Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium_small"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_2"
+            android:text="Plan, organise, inspect and supervise staff"
+            android:textColor="@color/darkgray"
+            android:textSize="@dimen/text_small"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/txt_supervisorname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_2"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_1"
+            android:text="General Contractor Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium_small"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_2"
+            android:text="Plan, manage, monitor and cordinate health and safety"
+            android:textColor="@color/darkgray"
+            android:textSize="@dimen/text_small"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/txt_contractorname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_5"
+            android:inputType="textPersonName" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressbar_addbuilding"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/spacing_3"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_add_building4"
+            android:layout_width="@dimen/btn_long_width"
+            android:layout_height="@dimen/btn_long_height"
+            android:layout_gravity="center"
+            android:background="@drawable/round_button"
+            android:text="Finish"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>
