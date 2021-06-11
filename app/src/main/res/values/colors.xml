@@ -14,4 +14,6 @@
     <color name="gray">#BABABA</color>
     <color name="mediumgray">#7A7A7A</color>
     <color name="darkgray">#454545</color>
+    <color name="orange">#FF5733</color>
+    <color name="red">#D30000</color>
 </resources>

@@ -47,7 +47,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'com.github.f0ris.sweetalert:library:1.5.1'
     implementation 'com.ramijemli.percentagechartview:percentagechartview:0.3.1'
-
+    implementation 'com.shuhart.stepview:stepview:1.5.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'

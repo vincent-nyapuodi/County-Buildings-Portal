@@ -41,7 +41,7 @@
         android:textColor="@color/darkgreen"
         android:textSize="@dimen/text_medium_large"
         android:textStyle="bold"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -60,28 +60,151 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_5"
-                android:text="Documents Upload"
+                android:layout_marginBottom="@dimen/spacing_1"
+                android:text="Building cetifications"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_large"
+                android:textSize="@dimen/text_medium_large"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="@dimen/spacing_6"
+                android:orientation="horizontal">
 
-                <com.ramijemli.percentagechartview.PercentageChartView
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/chartview_uploads"
-                    app:pcv_mode="ring"
-                    app:pcv_orientation="clockwise"
-                    app:pcv_startAngle="0"
-                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/spacing_2"
+                    android:text="Uploaded documents"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium_small"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/tv_documentsprogress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/ 5"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"
+                    android:textStyle="bold" />
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_5"
+                android:text="You need to upload all the required requirements for approval process to be requested"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_small"
+                android:textStyle="normal" />
+
+            <Button
+                android:id="@+id/btn_upload_documents"
+                android:layout_width="@dimen/btn_x_long_width"
+                android:layout_height="@dimen/btn_x_long_height"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/spacing_2"
+                android:text="Upload"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_4"
+        app:cardBackgroundColor="@color/lightgray"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_1"
+                android:text="Approval Process"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium_large"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_6"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/spacing_2"
+                    android:text="Approved documents"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium_small"
+                    android:textStyle="normal"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:id="@+id/tv_approvalprogress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/ 5"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"
+                    android:textStyle="bold"
+                    android:layout_centerInParent="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_x_small"
+                    android:id="@+id/tv_approvalview"
+                    android:drawableTint="@color/purple_700"
+                    android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+            <com.shuhart.stepview.StepView
+                android:id="@+id/stepview_approval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_3"
+                android:paddingVertical="15dp"
+                app:sv_animationType="Line"
+                app:sv_doneCircleColor="@android:color/darker_gray"
+                app:sv_doneCircleRadius="14dp"
+                app:sv_doneStepLineColor="@android:color/darker_gray"
+                app:sv_doneStepMarkColor="@color/orange"
+                app:sv_doneTextColor="@color/orange"
+                app:sv_nextStepLineColor="@color/orange"
+                app:sv_nextTextColor="@color/red"
+                app:sv_selectedCircleColor="@color/red"
+                app:sv_selectedCircleRadius="14dp"
+                app:sv_selectedStepNumberColor="@color/orange"
+                app:sv_selectedTextColor="@color/orange"
+                app:sv_stepLineWidth="2dp"
+                app:sv_stepNumberTextSize="14sp"
+                app:sv_stepPadding="4dp"
+                app:sv_stepViewStyle="@style/StepView"
+                app:sv_stepsNumber="4"
+                app:sv_textSize="15dp" />
 
         </LinearLayout>
 
