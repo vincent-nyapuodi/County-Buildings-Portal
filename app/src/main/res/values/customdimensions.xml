@@ -25,7 +25,9 @@
 
     <dimen name="btn_x_long_width">280dp</dimen>
     <dimen name="btn_long_width">180dp</dimen>
+    <dimen name="btn_small_width">100dp</dimen>
     <dimen name="btn_x_long_height">45dp</dimen>
     <dimen name="btn_long_height">45dp</dimen>
+    <dimen name="btn_small_height">45dp</dimen>
 
 </resources>
