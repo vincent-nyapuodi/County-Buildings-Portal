@@ -1,4 +1,4 @@
-package com.project.buildingapp;
+package com.project.buildingapp.fragments;
 
 import android.os.Bundle;
 
@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.project.buildingapp.R;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -23,7 +25,7 @@ public class DocumentsFragment extends Fragment {
 
     private View view;
 
-    private RelativeLayout lytKraHeading, lytNemaHeading, lytSanitationHeading, lytFireSafetyHeading, lytInspectionHeading;
+    private RelativeLayout lytKraHeading, lytNemaHeading, lytSanitationHeading, lytFireSafetyHeading, lytInspectionHeading; // TODO : transition on click
     private LinearLayout lytKraBody, lytNemaBody, lytSanitationBody, lytFireSafetyBody, lytInspectionBody; // TODO : make visible on click header
     private TextView tvKraContext, tvNemaContext, tvSanitationContext, tvFireSafetyContext, tvInspectionContext;  // TODO : made visible on upload / approve
     private ImageView imgKraPlus, imgNemaPlus, imgSanitationPlus, imgFireSafetyPlus, imgInspectionPlus; // TODO : switch btn minus and plus

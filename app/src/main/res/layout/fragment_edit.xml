@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/padding"
+    tools:context=".fragments.EditFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_5"
+        android:layout_marginBottom="@dimen/spacing_1"
+        android:text="Edit Building Details"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_x_large"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_6"
+        android:text="You can update any of the building details enlisted below"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_medium"
+        android:textStyle="normal" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_3"
+        android:text="Building Name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_medium_small"
+        android:textStyle="normal" />
+
+    <EditText
+        android:id="@+id/txt_edit_buildingname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_1"
+        android:inputType="text" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="Building Image"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium_small"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/btn_edit_buildingphoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:padding="@dimen/padding_x_small"
+            android:text="Upload"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_x_small"
+            android:textStyle="normal" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_3"
+        android:text="More Description"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_medium_small"
+        android:textStyle="normal" />
+
+    <EditText
+        android:id="@+id/txt_edit_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_2"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btn_edit"
+        android:layout_width="@dimen/btn_long_width"
+        android:layout_height="@dimen/btn_long_height"
+        android:layout_gravity="center"
+        android:background="@drawable/round_button"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+</LinearLayout>
