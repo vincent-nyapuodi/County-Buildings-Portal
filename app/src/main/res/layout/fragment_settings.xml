@@ -11,14 +11,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_5"
-        android:layout_marginBottom="@dimen/spacing_8"
-        android:drawableRight="@drawable/ic_baseline_settings_24"
-        android:drawablePadding="@dimen/spacing_1"
+        android:layout_marginTop="@dimen/spacing_2"
+        android:layout_marginBottom="@dimen/spacing_4"
         android:text="Settings"
         android:textColor="@color/black"
         android:textSize="@dimen/text_x_large"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:drawableRight="@drawable/ic_baseline_settings_24"
+        android:drawablePadding="@dimen/spacing_1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/darkgray"
+        android:layout_marginTop="@dimen/spacing_1"
+        android:layout_marginBottom="@dimen/spacing_8"/>
 
     <LinearLayout
         android:layout_width="match_parent"

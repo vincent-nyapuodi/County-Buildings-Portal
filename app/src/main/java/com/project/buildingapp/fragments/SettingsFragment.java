@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.project.buildingapp.R;
+import com.project.buildingapp.utils.BottomNavLocker;
+import com.project.buildingapp.utils.ToolBarLocker;
 
 public class SettingsFragment extends Fragment {
 
@@ -23,6 +26,8 @@ public class SettingsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         // set
+        ((BottomNavLocker)getActivity()).BottomNavLocked(false);
+        ((ToolBarLocker)getActivity()).ToolBarLocked(false);
 
 
         // find view by id
@@ -43,7 +48,7 @@ public class SettingsFragment extends Fragment {
     private View.OnClickListener editListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            
+            Navigation.findNavController(view).navigate(R.id.navigateToEdit);
         }
     };
 }

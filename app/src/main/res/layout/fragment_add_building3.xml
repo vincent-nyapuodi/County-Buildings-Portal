@@ -1,88 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     tools:context=".fragments.AddBuilding3Fragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_9"
-        android:padding="@dimen/padding"
-        android:text="Caretaker Details"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_large"
-        android:textStyle="bold" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout_add_building"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/dark_blue"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
-    <LinearLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolBarLayout_addbuilding2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@android:color/transparent"
+            app:expandedTitleMarginBottom="20dp"
+            app:expandedTitleMarginStart="15dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:statusBarScrim="@android:color/transparent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:padding="@dimen/padding_small"
+                android:text="Details about your building"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="bold" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/top_corner_round"
-        android:orientation="vertical"
-        android:padding="@dimen/padding">
+        android:overScrollMode="never"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_3"
-            android:text="Name"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_medium_small"
-            android:textStyle="normal" />
-
-        <EditText
-            android:id="@+id/txt_caretakername"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_2"
-            android:inputType="textPersonName" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/padding">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_3"
-            android:text="Phone Number"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_medium_small"
-            android:textStyle="normal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_3"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium_small"
+                android:textStyle="normal" />
 
-        <EditText
-            android:id="@+id/txt_caretakerphone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_2"
-            android:inputType="phone" />
+            <EditText
+                android:id="@+id/txt_caretakername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_2"
+                android:inputType="textPersonName" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_3"
-            android:text="Email Address"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_medium_small"
-            android:textStyle="normal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_3"
+                android:text="Phone Number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium_small"
+                android:textStyle="normal" />
 
-        <EditText
-            android:id="@+id/txt_caretakeremail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_4"
-            android:inputType="textEmailAddress" />
+            <EditText
+                android:id="@+id/txt_caretakerphone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_2"
+                android:inputType="phone" />
 
-        <Button
-            android:id="@+id/btn_add_building3"
-            android:layout_width="@dimen/btn_long_width"
-            android:layout_height="@dimen/btn_long_height"
-            android:layout_gravity="center"
-            android:background="@drawable/round_button"
-            android:text="Next"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_3"
+                android:text="Email Address"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium_small"
+                android:textStyle="normal" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/txt_caretakeremail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_4"
+                android:inputType="textEmailAddress" />
 
+            <Button
+                android:id="@+id/btn_add_building3"
+                android:layout_width="@dimen/btn_long_width"
+                android:layout_height="@dimen/btn_long_height"
+                android:layout_gravity="center"
+                android:background="@drawable/round_button"
+                android:text="Next"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
 
-</LinearLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.project.buildingapp.R;
+import com.project.buildingapp.utils.BottomNavLocker;
+import com.project.buildingapp.utils.ToolBarLocker;
 
 
 public class EditFragment extends Fragment {
@@ -26,6 +28,7 @@ public class EditFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_edit, container, false);
 
         // set
+        ((BottomNavLocker)getActivity()).BottomNavLocked(true);
 
 
         // find view by id

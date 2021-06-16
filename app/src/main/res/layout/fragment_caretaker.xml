@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:padding="@dimen/padding"
     tools:context=".fragments.CaretakerFragment">
@@ -11,23 +12,28 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_5"
-        android:layout_marginBottom="@dimen/spacing_1"
+        android:layout_marginTop="@dimen/spacing_2"
+        android:layout_marginBottom="@dimen/spacing_2"
+        android:drawableRight="@drawable/ic_baseline_person_24"
+        android:drawablePadding="@dimen/spacing_1"
         android:text="CareTaker"
         android:textColor="@color/black"
         android:textSize="@dimen/text_x_large"
-        android:textStyle="bold"
-        android:drawableRight="@drawable/ic_baseline_person_24"
-        android:drawablePadding="@dimen/spacing_1"/>
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_6"
         android:text="Add details for your building /house caretaker alias personal assisant"
         android:textColor="@color/black"
         android:textSize="@dimen/text_medium_large"
         android:textStyle="normal" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginVertical="@dimen/spacing_4"
+        android:background="@color/darkgray" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            app:cardBackgroundColor="@color/lightgray"
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="true"

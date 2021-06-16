@@ -3,6 +3,7 @@ package com.project.buildingapp.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.project.buildingapp.R;
+import com.project.buildingapp.utils.BottomNavLocker;
+import com.project.buildingapp.utils.ToolBarLocker;
 import com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText;
 
 
@@ -31,6 +34,8 @@ public class RegisterFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_register, container, false);
 
         // set
+        ((ToolBarLocker)getActivity()).ToolBarLocked(false);
+        ((BottomNavLocker)getActivity()).BottomNavLocked(true);
 
 
         // find view by id
@@ -47,6 +52,7 @@ public class RegisterFragment extends Fragment {
 
         // listeners
         btnRegister.setOnClickListener(registerListener);
+        tvRegisterToLogin.setOnClickListener(loginListener);
 
         return view;
     }
@@ -54,7 +60,14 @@ public class RegisterFragment extends Fragment {
     private View.OnClickListener registerListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Navigation.findNavController(view).navigate(R.id.navigateToSelectFromRegistration);
+        }
+    };
 
+    private View.OnClickListener loginListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Navigation.findNavController(view).navigateUp();
         }
     };
 }

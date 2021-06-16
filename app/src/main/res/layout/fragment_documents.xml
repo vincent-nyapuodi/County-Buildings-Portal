@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:padding="@dimen/padding"
     tools:context=".fragments.DocumentsFragment">
@@ -32,6 +33,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/lyt_certifications_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -103,10 +105,16 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/spacing_1"
+                    android:text="Certificate provided by kra"
+                    android:textSize="@dimen/text_x_small" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_1"
                     android:layout_marginBottom="@dimen/spacing_2">
 
                     <TextView
@@ -133,22 +141,22 @@
                 <EditText
                     android:id="@+id/txt_kra_certificateno"
                     android:layout_width="200dp"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_1"
                     android:hint="Certificate No"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
                 <Button
+                    android:id="@+id/btn_kra_upload"
                     android:layout_width="@dimen/btn_small_width"
                     android:layout_height="@dimen/btn_small_height"
-                    android:id="@+id/btn_kra_upload"
-                    android:text="Upload"
-                    android:textSize="@dimen/text_x_small"
-                    android:textStyle="bold"
-                    android:background="@drawable/round_button"
-                    android:textAllCaps="false"
                     android:layout_gravity="right"
-                    android:layout_marginBottom="@dimen/spacing_1"/>
+                    android:layout_marginBottom="@dimen/spacing_1"
+                    android:background="@drawable/round_button"
+                    android:text="Upload"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_x_small"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -219,10 +227,16 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/spacing_1"
+                    android:text="Certificate provided by NEMA after environmental inspection"
+                    android:textSize="@dimen/text_x_small" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_1"
                     android:layout_marginBottom="@dimen/spacing_2">
 
                     <TextView
@@ -249,22 +263,22 @@
                 <EditText
                     android:id="@+id/txt_nema_certificateno"
                     android:layout_width="200dp"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_1"
                     android:hint="Certificate No"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
                 <Button
+                    android:id="@+id/btn_nema_upload"
                     android:layout_width="@dimen/btn_small_width"
                     android:layout_height="@dimen/btn_small_height"
-                    android:id="@+id/btn_nema_upload"
-                    android:text="Upload"
-                    android:textSize="@dimen/text_x_small"
-                    android:textStyle="bold"
-                    android:background="@drawable/round_button"
-                    android:textAllCaps="false"
                     android:layout_gravity="right"
-                    android:layout_marginBottom="@dimen/spacing_1"/>
+                    android:layout_marginBottom="@dimen/spacing_1"
+                    android:background="@drawable/round_button"
+                    android:text="Upload"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_x_small"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -335,6 +349,12 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/spacing_1"
+                    android:text="Certificate provided by health after inspection of premises" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -365,22 +385,22 @@
                 <EditText
                     android:id="@+id/txt_sanitation_certificateno"
                     android:layout_width="200dp"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_1"
                     android:hint="Certificate No"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
                 <Button
+                    android:id="@+id/btn_sanitation_upload"
                     android:layout_width="@dimen/btn_small_width"
                     android:layout_height="@dimen/btn_small_height"
-                    android:id="@+id/btn_sanitation_upload"
-                    android:text="Upload"
-                    android:textSize="@dimen/text_x_small"
-                    android:textStyle="bold"
-                    android:background="@drawable/round_button"
-                    android:textAllCaps="false"
                     android:layout_gravity="right"
-                    android:layout_marginBottom="@dimen/spacing_1"/>
+                    android:layout_marginBottom="@dimen/spacing_1"
+                    android:background="@drawable/round_button"
+                    android:text="Upload"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_x_small"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -451,6 +471,13 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/spacing_1"
+                    android:text="Certificate provided after firesafety clearance, need to be firesafety equipment"
+                    android:textSize="@dimen/text_x_small" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -481,22 +508,22 @@
                 <EditText
                     android:id="@+id/txt_firesafety_certificateno"
                     android:layout_width="200dp"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_1"
                     android:hint="Certificate No"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
                 <Button
+                    android:id="@+id/btn_firesafety_upload"
                     android:layout_width="@dimen/btn_small_width"
                     android:layout_height="@dimen/btn_small_height"
-                    android:id="@+id/btn_firesafety_upload"
-                    android:text="Upload"
-                    android:textSize="@dimen/text_x_small"
-                    android:textStyle="bold"
-                    android:background="@drawable/round_button"
-                    android:textAllCaps="false"
                     android:layout_gravity="right"
-                    android:layout_marginBottom="@dimen/spacing_1"/>
+                    android:layout_marginBottom="@dimen/spacing_1"
+                    android:background="@drawable/round_button"
+                    android:text="Upload"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_x_small"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -567,6 +594,13 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/spacing_1"
+                    android:text="Certificate provided by kra"
+                    android:textSize="@dimen/text_x_small" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -597,22 +631,22 @@
                 <EditText
                     android:id="@+id/txt_inspection_certificateno"
                     android:layout_width="200dp"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_1"
                     android:hint="Certificate No"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
                 <Button
+                    android:id="@+id/btn_inspection_upload"
                     android:layout_width="@dimen/btn_small_width"
                     android:layout_height="@dimen/btn_small_height"
-                    android:id="@+id/btn_inspection_upload"
-                    android:text="Upload"
-                    android:textSize="@dimen/text_x_small"
-                    android:textStyle="bold"
-                    android:background="@drawable/round_button"
-                    android:textAllCaps="false"
                     android:layout_gravity="right"
-                    android:layout_marginBottom="@dimen/spacing_1"/>
+                    android:layout_marginBottom="@dimen/spacing_1"
+                    android:background="@drawable/round_button"
+                    android:text="Upload"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_x_small"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

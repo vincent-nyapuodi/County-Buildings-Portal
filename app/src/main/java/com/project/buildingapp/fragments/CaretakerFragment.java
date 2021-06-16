@@ -8,9 +8,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.buildingapp.R;
+import com.project.buildingapp.utils.BottomNavLocker;
+import com.project.buildingapp.utils.ToolBarLocker;
 
 public class CaretakerFragment extends Fragment {
 
@@ -23,6 +26,8 @@ public class CaretakerFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_caretaker, container, false);
 
         // set
+        ((BottomNavLocker)getActivity()).BottomNavLocked(false);
+        ((ToolBarLocker)getActivity()).ToolBarLocked(false);
 
         // find view by id
         recyclerView = view.findViewById(R.id.recyclerview_caretaker);
@@ -32,7 +37,15 @@ public class CaretakerFragment extends Fragment {
 
 
         // listeners
+        tvAddCaretaker.setOnClickListener(addListener);
 
         return view;
     }
+
+    private View.OnClickListener addListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Navigation.findNavController(view).navigate(R.id.navigateToAddCaretakerFromCaretaker);
+        }
+    };
 }

@@ -10,8 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.project.buildingapp.R;
+import com.project.buildingapp.utils.BottomNavLocker;
+import com.project.buildingapp.utils.ToolBarLocker;
 import com.shuhart.stepview.StepView;
 
 public class HomeFragment extends Fragment {
@@ -26,7 +29,8 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // set
-
+        ((ToolBarLocker)getActivity()).ToolBarLocked(false);
+        ((BottomNavLocker)getActivity()).BottomNavLocked(false);
 
         // find view by id
         tvBuildingName = view.findViewById(R.id.tv_buildingname);
@@ -52,7 +56,7 @@ public class HomeFragment extends Fragment {
     private View.OnClickListener uploadListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            Navigation.findNavController(view).navigate(R.id.navigateToDocuments);
         }
     };
 

@@ -12,8 +12,8 @@
         android:id="@+id/tv_buildingname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_5"
-        android:layout_marginBottom="@dimen/spacing_1"
+        android:layout_marginTop="@dimen/spacing_2"
+        android:layout_marginBottom="@dimen/spacing_2"
         android:drawableRight="@drawable/ic_home_black_24dp"
         android:drawablePadding="@dimen/spacing_1"
         android:text="Huoston House"
@@ -25,11 +25,16 @@
         android:id="@+id/tv_buildinglocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_3"
         android:text="Githurai"
         android:textColor="@color/black"
         android:textSize="@dimen/text_medium_large"
         android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginVertical="@dimen/spacing_3"
+        android:background="@color/darkgray" />
 
     <TextView
         android:id="@+id/tv_buildingapproved"

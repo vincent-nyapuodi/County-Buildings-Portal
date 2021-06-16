@@ -1,194 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue"
-    android:orientation="vertical"
     tools:context=".fragments.AddBuilding1Fragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_9"
-        android:padding="@dimen/padding"
-        android:text="Describe your building"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_large"
-        android:textStyle="bold" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout_add_building"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/dark_blue"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
-    <LinearLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolBarLayout_addbuilding1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@android:color/transparent"
+            app:expandedTitleMarginBottom="20dp"
+            app:expandedTitleMarginStart="15dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:statusBarScrim="@android:color/transparent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:padding="@dimen/padding_small"
+                android:text="Choose the type of building"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="bold" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/top_corner_round"
-        android:orientation="vertical"
-        android:padding="@dimen/padding">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_3">
-
-            <Button
-                android:id="@+id/btn_add_private"
-                android:layout_width="150dp"
-                android:layout_height="45dp"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/round_button"
-                android:text="Private"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_add_commercial"
-                android:layout_width="150dp"
-                android:layout_height="45dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/round_button"
-                android:text="Commercial"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
+        android:overScrollMode="never"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
-            android:id="@+id/lyt_commercial"
+            android:id="@+id/lyt_addbuilding_data"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/top_corner_round"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:padding="@dimen/padding">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_2"
-                android:text="Commercial building"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_medium"
-                android:textStyle="bold" />
-
-            <RadioGroup
-                android:id="@+id/rdg_commercial"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="@dimen/spacing_3">
 
-                <RadioButton
-                    android:id="@+id/rd_hotel"
+                <Button
+                    android:id="@+id/btn_add_private"
+                    android:layout_width="150dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/building_selected"
+                    android:text="Private"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_add_commercial"
+                    android:layout_width="150dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/building_unselected"
+                    android:text="Commercial"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkgray"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/lyt_commercial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hotel"
-                    android:textColor="@color/darkgray"
-                    android:textSize="16dp"
-                    android:textStyle="normal" />
+                    android:layout_marginBottom="@dimen/spacing_2"
+                    android:text="Commercial building"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"
+                    android:textStyle="bold" />
 
-                <RadioButton
-                    android:id="@+id/rd_rental"
+                <RadioGroup
+                    android:id="@+id/rdg_commercial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rd_hotel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hotel"
+                        android:textColor="@color/darkgray"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                    <RadioButton
+                        android:id="@+id/rd_rental"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rental"
+                        android:textColor="@color/darkgray"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                    <RadioButton
+                        android:id="@+id/rd_industrial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Industrial"
+                        android:textColor="@color/darkgray"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                    <RadioButton
+                        android:id="@+id/rd_office"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Office"
+                        android:textColor="@color/darkgray"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lyt_private"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rental"
-                    android:textColor="@color/darkgray"
-                    android:textSize="16dp"
-                    android:textStyle="normal" />
+                    android:layout_marginBottom="@dimen/spacing_2"
+                    android:text="Private Residence Building"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_medium"
+                    android:textStyle="bold" />
 
-                <RadioButton
-                    android:id="@+id/rd_industrial"
-                    android:layout_width="wrap_content"
+                <RadioGroup
+                    android:id="@+id/rdg_private"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Industrial"
-                    android:textColor="@color/darkgray"
-                    android:textSize="16dp"
-                    android:textStyle="normal" />
+                    android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/rd_office"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Office"
-                    android:textColor="@color/darkgray"
-                    android:textSize="16dp"
-                    android:textStyle="normal" />
+                    <RadioButton
+                        android:id="@+id/rd_City"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="City"
+                        android:textColor="@color/darkgray"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
 
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/rd_upcountry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Upcountry"
+                        android:textColor="@color/darkgray"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                    <RadioButton
+                        android:id="@+id/rd_ghetto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ghetto"
+                        android:textColor="@color/darkgray"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                    <RadioButton
+                        android:id="@+id/rd_estate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estate"
+                        android:textColor="@color/darkgray"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_add_building1"
+                android:layout_width="@dimen/btn_long_width"
+                android:layout_height="@dimen/btn_long_height"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/spacing_3"
+                android:background="@drawable/round_button"
+                android:text="Next"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/lyt_private"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
+    </androidx.core.widget.NestedScrollView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_2"
-                android:text="Private Residence Building"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_medium"
-                android:textStyle="bold" />
-
-            <RadioGroup
-                android:id="@+id/rdg_private"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RadioButton
-                    android:id="@+id/rd_City"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="City"
-                    android:textColor="@color/darkgray"
-                    android:textSize="16dp"
-                    android:textStyle="normal" />
-
-                <RadioButton
-                    android:id="@+id/rd_upcountry"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Upcountry"
-                    android:textColor="@color/darkgray"
-                    android:textSize="16dp"
-                    android:textStyle="normal" />
-
-                <RadioButton
-                    android:id="@+id/rd_ghetto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ghetto"
-                    android:textColor="@color/darkgray"
-                    android:textSize="16dp"
-                    android:textStyle="normal" />
-
-                <RadioButton
-                    android:id="@+id/rd_estate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Estate"
-                    android:textColor="@color/darkgray"
-                    android:textSize="16dp"
-                    android:textStyle="normal" />
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/btn_add_building1"
-            android:layout_width="@dimen/btn_long_width"
-            android:layout_height="@dimen/btn_long_height"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/spacing_3"
-            android:background="@drawable/round_button"
-            android:enabled="false"
-            android:text="Next"
-            android:textColor="@color/black"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

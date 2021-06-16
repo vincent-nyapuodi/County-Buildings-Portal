@@ -17,25 +17,26 @@ import androidx.navigation.ui.NavigationUI;
 
 public class Dashboard extends AppCompatActivity implements BottomNavLocker, ToolBarLocker {
 
-    private BottomNavigationView navView;
-    private AppBarConfiguration appBarConfiguration;
-    private NavController navController;
-    private Toolbar toolbar;
+    BottomNavigationView navView;
+    AppBarConfiguration appBarConfiguration;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_dashboard);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         navView = findViewById(R.id.nav_view);
+
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_caretaker, R.id.navigation_settings)
                 .build();
 
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.project.buildingapp.R;
+import com.project.buildingapp.utils.BottomNavLocker;
+import com.project.buildingapp.utils.ToolBarLocker;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,7 +29,7 @@ public class DocumentsFragment extends Fragment {
     private View view;
 
     private RelativeLayout lytKraHeading, lytNemaHeading, lytSanitationHeading, lytFireSafetyHeading, lytInspectionHeading; // TODO : transition on click
-    private LinearLayout lytKraBody, lytNemaBody, lytSanitationBody, lytFireSafetyBody, lytInspectionBody; // TODO : make visible on click header
+    private LinearLayout lytKraBody, lytNemaBody, lytSanitationBody, lytFireSafetyBody, lytInspectionBody, lytData; // TODO : make visible on click header
     private TextView tvKraContext, tvNemaContext, tvSanitationContext, tvFireSafetyContext, tvInspectionContext;  // TODO : made visible on upload / approve
     private ImageView imgKraPlus, imgNemaPlus, imgSanitationPlus, imgFireSafetyPlus, imgInspectionPlus; // TODO : switch btn minus and plus
     private ImageView imgKraUploadDoc, imgNemaUploadDoc, imgSanitationUploadDoc, imgFireSafetyUploadDoc, imgInspectionUploadDoc;
@@ -39,6 +42,7 @@ public class DocumentsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_documents, container, false);
 
         // set
+        ((BottomNavLocker) getActivity()).BottomNavLocked(true);
 
 
         // find view by id
@@ -53,6 +57,7 @@ public class DocumentsFragment extends Fragment {
         lytSanitationBody = view.findViewById(R.id.lyt_body_sanitationcertification);
         lytFireSafetyBody = view.findViewById(R.id.lyt_body_firesafetycertification);
         lytInspectionBody = view.findViewById(R.id.lyt_body_inspectioncertification);
+        lytData = view.findViewById(R.id.lyt_certifications_data);
 
         tvKraContext = view.findViewById(R.id.tv_kra_context);
         tvNemaContext = view.findViewById(R.id.tv_nema_context);
@@ -94,6 +99,12 @@ public class DocumentsFragment extends Fragment {
 
 
         // listeners
+        imgKraPlus.setOnClickListener(kraVisibilityListener);
+        imgNemaPlus.setOnClickListener(nemaVisibilityListener);
+        imgSanitationPlus.setOnClickListener(sanitationVisibilityListener);
+        imgFireSafetyPlus.setOnClickListener(fireSafetyVisibilityListener);
+        imgInspectionPlus.setOnClickListener(inspectionVisibilityListener);
+
         btnKraUpload.setOnClickListener(kraListener);
         btnNemaUpload.setOnClickListener(nemaListener);
         btnSanitationUpload.setOnClickListener(sanitationListener);
@@ -132,6 +143,49 @@ public class DocumentsFragment extends Fragment {
     };
 
     private View.OnClickListener inspectionListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+    // visibility
+    private View.OnClickListener kraVisibilityListener = new View.OnClickListener() {
+        boolean visible;
+
+        @Override
+        public void onClick(View view) {
+
+            TransitionManager.beginDelayedTransition(lytData);
+            visible = !visible;
+            imgKraPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
+            lytKraBody.setVisibility(visible ? View.VISIBLE : View.GONE);
+
+        }
+    };
+
+    private View.OnClickListener nemaVisibilityListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+    private View.OnClickListener sanitationVisibilityListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+    private View.OnClickListener fireSafetyVisibilityListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+    private View.OnClickListener inspectionVisibilityListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 

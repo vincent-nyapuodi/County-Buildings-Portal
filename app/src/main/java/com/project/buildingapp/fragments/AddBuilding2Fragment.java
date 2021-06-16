@@ -3,6 +3,7 @@ package com.project.buildingapp.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.project.buildingapp.R;
+import com.project.buildingapp.utils.BottomNavLocker;
+import com.project.buildingapp.utils.ToolBarLocker;
 
 public class AddBuilding2Fragment extends Fragment {
 
@@ -28,6 +31,8 @@ public class AddBuilding2Fragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_add_building2, container, false);
 
         // set
+        ((ToolBarLocker)getActivity()).ToolBarLocked(false);
+        ((BottomNavLocker)getActivity()).BottomNavLocked(true);
 
         // find view by id
         txtBuildingName = view.findViewById(R.id.txt_buildingname);
@@ -57,7 +62,11 @@ public class AddBuilding2Fragment extends Fragment {
     private View.OnClickListener addBuildingListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            if (chkCaretaker.isChecked()) {
+                Navigation.findNavController(view).navigate(R.id.navigateToAddCaretaker);
+            } else {
+                Navigation.findNavController(view).navigate(R.id.navigateToAddBuilding3);
+            }
         }
     };
 }
