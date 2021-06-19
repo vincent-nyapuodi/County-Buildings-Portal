@@ -160,35 +160,54 @@ public class DocumentsFragment extends Fragment {
             visible = !visible;
             imgKraPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
             lytKraBody.setVisibility(visible ? View.VISIBLE : View.GONE);
-
         }
     };
 
     private View.OnClickListener nemaVisibilityListener = new View.OnClickListener() {
+        boolean visible;
+
         @Override
         public void onClick(View view) {
-
+            TransitionManager.beginDelayedTransition(lytData);
+            visible = !visible;
+            imgNemaPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
+            lytNemaBody.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     };
 
     private View.OnClickListener sanitationVisibilityListener = new View.OnClickListener() {
+        boolean visible;
+
         @Override
         public void onClick(View view) {
-
+            TransitionManager.beginDelayedTransition(lytData);
+            visible = !visible;
+            imgSanitationPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
+            lytSanitationBody.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     };
 
     private View.OnClickListener fireSafetyVisibilityListener = new View.OnClickListener() {
+        boolean visible;
+
         @Override
         public void onClick(View view) {
-
+            TransitionManager.beginDelayedTransition(lytData);
+            visible = !visible;
+            imgFireSafetyPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
+            lytFireSafetyBody.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     };
 
     private View.OnClickListener inspectionVisibilityListener = new View.OnClickListener() {
+        boolean visible;
+
         @Override
         public void onClick(View view) {
-
+            TransitionManager.beginDelayedTransition(lytData);
+            visible = !visible;
+            imgInspectionPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
+            lytInspectionBody.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     };
 }

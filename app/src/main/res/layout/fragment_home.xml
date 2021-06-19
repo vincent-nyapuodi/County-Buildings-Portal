@@ -117,7 +117,8 @@
                 android:text="Upload"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:background="@drawable/round_button"/>
 
         </LinearLayout>
 
