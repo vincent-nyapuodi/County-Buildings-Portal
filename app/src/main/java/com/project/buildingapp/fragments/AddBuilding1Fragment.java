@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.project.buildingapp.R;
@@ -40,10 +41,10 @@ public class AddBuilding1Fragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_add_building1, container, false);
 
         // set
-        ((ToolBarLocker) getActivity()).ToolBarLocked(false);
-        ((BottomNavLocker) getActivity()).BottomNavLocked(true);
+        //((ToolBarLocker) getActivity()).ToolBarLocked(false);
+        //((BottomNavLocker) getActivity()).BottomNavLocked(true);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Add Building");
+        //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add Building");
 
         // find view by id
         rdgPrivate = view.findViewById(R.id.rdg_private);
@@ -68,7 +69,46 @@ public class AddBuilding1Fragment extends Fragment {
     private View.OnClickListener addBuildingListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Navigation.findNavController(view).navigate(R.id.navigateToAddBuilding2);
+            String building = "";
+
+            if (rdgPrivate.getCheckedRadioButtonId() == -1 && rdgCommercial.getCheckedRadioButtonId() == -1) {
+                Toast.makeText(getContext(), "Please Check on option", Toast.LENGTH_SHORT).show();
+            } else {
+
+                if (rdgPrivate.getCheckedRadioButtonId() != -1) {
+                    if (rdgPrivate.getCheckedRadioButtonId() == R.id.rd_City){
+                        building = "private_1";
+                    }
+                    if (rdgPrivate.getCheckedRadioButtonId() == R.id.rd_upcountry){
+                        building = "private_2";
+                    }
+                    if (rdgPrivate.getCheckedRadioButtonId() == R.id.rd_ghetto){
+                        building = "private_3";
+                    }
+                    if (rdgPrivate.getCheckedRadioButtonId() == R.id.rd_estate){
+                        building = "private_4";
+                    }
+
+                    AddBuilding1FragmentDirections.NavigateToAddBuilding2 action = AddBuilding1FragmentDirections.navigateToAddBuilding2(building);
+                    Navigation.findNavController(view).navigate(action);
+                } else {
+                    if (rdgCommercial.getCheckedRadioButtonId() == R.id.rd_hotel){
+                        building = "commercial_1";
+                    }
+                    if (rdgCommercial.getCheckedRadioButtonId() == R.id.rd_rental){
+                        building = "commercial_2";
+                    }
+                    if (rdgCommercial.getCheckedRadioButtonId() == R.id.rd_industrial){
+                        building = "commercial_3";
+                    }
+                    if (rdgCommercial.getCheckedRadioButtonId() == R.id.rd_office){
+                        building = "commercial_4";
+                    }
+
+                    AddBuilding1FragmentDirections.NavigateToAddBuilding2 action = AddBuilding1FragmentDirections.navigateToAddBuilding2(building);
+                    Navigation.findNavController(view).navigate(action);
+                }
+            }
         }
     };
 
@@ -115,7 +155,7 @@ public class AddBuilding1Fragment extends Fragment {
         this.btn_unfocus = btn_focus;
     }
 
-    private void btnToggle(View.OnClickListener listener){
+    private void btnToggle(View.OnClickListener listener) {
         for (int i = 0; i < btn.length; i++) {
             btn[i] = (Button) view.findViewById(btn_id[i]);
             btn[i].setOnClickListener(listener);

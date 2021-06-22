@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/splashscreenFragment">
+    app:startDestination="@id/addBuilding1Fragment">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -89,6 +89,9 @@
         <action
             android:id="@+id/navigateToAddCaretaker"
             app:destination="@id/addBuilding3Fragment" />
+        <argument
+            android:name="building_type"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/addBuilding4Fragment"
@@ -100,6 +103,36 @@
             app:destination="@id/navigation_home"
             app:launchSingleTop="true"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="building_type"
+            app:argType="string" />
+        <argument
+            android:name="building_name"
+            app:argType="string" />
+        <argument
+            android:name="building_county"
+            app:argType="string" />
+        <argument
+            android:name="building_town"
+            app:argType="string" />
+        <argument
+            android:name="building_description"
+            app:argType="string" />
+        <argument
+            android:name="building_url"
+            app:argType="string" />
+        <argument
+            android:name="caretaker_name"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="caretaker_phone"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="caretaker_email"
+            app:argType="string"
+            android:defaultValue="null" />
     </fragment>
     <fragment
         android:id="@+id/addBuilding3Fragment"
@@ -109,6 +142,36 @@
         <action
             android:id="@+id/navigateToAddBuilding3FromAddCaretaker"
             app:destination="@id/addBuilding4Fragment" />
+        <argument
+            android:name="building_type"
+            app:argType="string" />
+        <argument
+            android:name="building_name"
+            app:argType="string" />
+        <argument
+            android:name="building_county"
+            app:argType="string" />
+        <argument
+            android:name="building_town"
+            app:argType="string" />
+        <argument
+            android:name="building_description"
+            app:argType="string" />
+        <argument
+            android:name="building_url"
+            app:argType="string" />
+        <argument
+            android:name="caretaker_name"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="caretaker_phone"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="caretaker_email"
+            app:argType="string"
+            android:defaultValue="null" />
     </fragment>
     <fragment
         android:id="@+id/documentsFragment"

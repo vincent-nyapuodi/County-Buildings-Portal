@@ -1,5 +1,7 @@
 package com.project.buildingapp.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,10 +14,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.project.buildingapp.R;
 import com.project.buildingapp.utils.BottomNavLocker;
 import com.project.buildingapp.utils.ToolBarLocker;
+
+import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 public class AddBuilding2Fragment extends Fragment {
 
@@ -26,13 +33,22 @@ public class AddBuilding2Fragment extends Fragment {
     private CheckBox chkCaretaker;
     private Button btnBuildingPhoto, btnAddBuilding2;
 
+    private AddBuilding2FragmentArgs args;
+    private String buildingtype;
+    private int SELECT_PICTURE = 200;
+    private Uri selectedimageurl;
+
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_building2, container, false);
 
         // set
-        ((ToolBarLocker)getActivity()).ToolBarLocked(false);
-        ((BottomNavLocker)getActivity()).BottomNavLocked(true);
+        ((ToolBarLocker) getActivity()).ToolBarLocked(false);
+        ((BottomNavLocker) getActivity()).BottomNavLocked(true);
+
+        args = AddBuilding2FragmentArgs.fromBundle(getArguments());
+        buildingtype = args.getBuildingType();
 
         // find view by id
         txtBuildingName = view.findViewById(R.id.txt_buildingname);
@@ -45,6 +61,8 @@ public class AddBuilding2Fragment extends Fragment {
 
         // set / load data
 
+//        TODO : load spinner data on counties in spinner
+
         // listeners
         btnBuildingPhoto.setOnClickListener(photoListener);
         btnAddBuilding2.setOnClickListener(addBuildingListener);
@@ -55,18 +73,67 @@ public class AddBuilding2Fragment extends Fragment {
     private View.OnClickListener photoListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            imageChooser();
         }
     };
 
     private View.OnClickListener addBuildingListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (chkCaretaker.isChecked()) {
-                Navigation.findNavController(view).navigate(R.id.navigateToAddCaretaker);
+            String buildingname = txtBuildingName.getText().toString().trim();
+            String county = spinnerCounty.getSelectedItem().toString();
+            String town = txtTown.getText().toString().trim();
+            String description = txtDescription.getText().toString().trim();
+            String caretakername = "null";
+            int caretakerphone = 0;
+            String caretakeremail = "null";
+
+            if (buildingname.isEmpty()) {
+                Toast.makeText(getContext(), "Building Name is empty", Toast.LENGTH_SHORT).show();
+            } else if (town.isEmpty()) {
+                Toast.makeText(getContext(), "Town is empty", Toast.LENGTH_SHORT).show();
+            } else if (description.isEmpty()) {
+                Toast.makeText(getContext(), "More description is empty", Toast.LENGTH_SHORT).show();
             } else {
-                Navigation.findNavController(view).navigate(R.id.navigateToAddBuilding3);
+                if (chkCaretaker.isChecked()) {
+                    AddBuilding2FragmentDirections.NavigateToAddCaretaker action = AddBuilding2FragmentDirections.navigateToAddCaretaker(buildingtype,
+                            buildingname, county, town, description, selectedimageurl.toString());
+                    action.setCaretakerEmail(caretakeremail);
+                    action.setCaretakerName(caretakername);
+                    action.setCaretakerPhone(caretakerphone);
+                    Navigation.findNavController(view).navigate(action);
+                } else {
+                    AddBuilding2FragmentDirections.NavigateToAddBuilding3 action = AddBuilding2FragmentDirections.navigateToAddBuilding3(buildingtype,
+                            buildingname, county, town, description, selectedimageurl.toString());
+                    action.setCaretakerEmail(caretakeremail);
+                    action.setCaretakerName(caretakername);
+                    action.setCaretakerPhone(caretakerphone);
+                    Navigation.findNavController(view).navigate(action);
+                }
             }
         }
+
     };
+
+    private void imageChooser() {
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            if (requestCode == SELECT_PICTURE) {
+                Uri selectedImageUri = data.getData();
+
+                this.selectedimageurl = selectedImageUri;
+                Toast.makeText(getContext(), "Image Uploaded", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }

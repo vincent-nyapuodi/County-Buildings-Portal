@@ -6,6 +6,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:padding="@dimen/padding"
+    android:background="@color/white"
     tools:context=".fragments.SplashscreenFragment">
 
     <LinearLayout

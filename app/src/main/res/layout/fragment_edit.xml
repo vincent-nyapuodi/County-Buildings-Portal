@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:padding="@dimen/padding"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     tools:context=".fragments.EditFragment">
 
     <TextView
