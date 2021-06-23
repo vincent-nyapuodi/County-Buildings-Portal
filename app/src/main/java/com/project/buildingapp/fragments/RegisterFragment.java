@@ -101,7 +101,7 @@ public class RegisterFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(getContext(), "Successful", Toast.LENGTH_SHORT).show();
+                                register(email, password);
                             } else {
                                 Toast.makeText(getContext(), "Failed to save data", Toast.LENGTH_SHORT).show();
                             }

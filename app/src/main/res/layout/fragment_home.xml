@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     android:padding="@dimen/padding"
-    android:background="@color/white"
     tools:context=".fragments.HomeFragment">
 
     <TextView
@@ -115,11 +115,11 @@
                 android:layout_height="@dimen/btn_x_long_height"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/spacing_2"
+                android:background="@drawable/round_button"
                 android:text="Upload"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:background="@drawable/round_button"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 

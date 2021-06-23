@@ -4,6 +4,10 @@ public class Building {
 
     private String owneremail, owneremail_buildingcode, buildingcode, buildingtype, buildingname, buildingcounty, buildingtown, buildingdesc, buildingphoto;
 
+    public Building() {
+
+    }
+
     public Building(String owneremail, String owneremail_buildingcode, String buildingcode, String buildingtype, String buildingname, String buildingcounty, String buildingtown, String buildingdesc, String buildingphoto) {
         this.owneremail = owneremail;
         this.owneremail_buildingcode = owneremail_buildingcode;

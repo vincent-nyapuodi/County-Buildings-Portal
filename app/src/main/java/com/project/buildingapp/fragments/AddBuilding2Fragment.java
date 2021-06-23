@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -61,7 +62,10 @@ public class AddBuilding2Fragment extends Fragment {
 
         // set / load data
 
-//        TODO : load spinner data on counties in spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.counties, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCounty.setAdapter(adapter);
 
         // listeners
         btnBuildingPhoto.setOnClickListener(photoListener);
@@ -90,6 +94,8 @@ public class AddBuilding2Fragment extends Fragment {
 
             if (buildingname.isEmpty()) {
                 Toast.makeText(getContext(), "Building Name is empty", Toast.LENGTH_SHORT).show();
+            } else if (county.equals("-- SELECT COUNTY --")) {
+                Toast.makeText(getContext(), "Select County", Toast.LENGTH_SHORT).show();
             } else if (town.isEmpty()) {
                 Toast.makeText(getContext(), "Town is empty", Toast.LENGTH_SHORT).show();
             } else if (description.isEmpty()) {

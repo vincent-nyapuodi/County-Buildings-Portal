@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,8 +41,8 @@ public class AccountAdapter extends FirebaseRecyclerAdapter<Building, AccountAda
     @Override
     protected void onBindViewHolder(@NonNull AccountAdapter.MyViewHolder holder, int position, @NonNull Building model) {
         TextView tvAccountName = holder.tvAccountName;
-
         tvAccountName.setText(model.getBuildingname() + " - " + model.getBuildingtown() + ", " + model.getBuildingcounty());
+
         tvAccountName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +58,7 @@ public class AccountAdapter extends FirebaseRecyclerAdapter<Building, AccountAda
                             buildingcode = snapshot.child("buildingcode").getValue().toString();
                         }
 
+                        Toast.makeText(context, "Building code = " + buildingcode, Toast.LENGTH_SHORT).show();
                         reference.orderByChild("buildingcode").equalTo(buildingcode).addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -64,7 +66,7 @@ public class AccountAdapter extends FirebaseRecyclerAdapter<Building, AccountAda
                                     String key = snapshot.getKey();
 
                                     reference.child(key).child("status").setValue(true);
-                                    reference.child(refKey).child("buildingcode_status").setValue(model.getBuildingcode() + "_true");
+                                    reference.child(key).child("email_status").setValue(model.getOwneremail() + "_true");
 
                                     Navigation.findNavController(view).navigate(R.id.navigateToHome);
                                 }

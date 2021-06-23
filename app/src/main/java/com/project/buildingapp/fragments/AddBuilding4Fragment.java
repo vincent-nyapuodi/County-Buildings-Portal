@@ -206,8 +206,9 @@ public class AddBuilding4Fragment extends Fragment {
                                             if (task.isSuccessful()) {
 
                                                 Session session = new Session(
+                                                        email,
                                                         buildingcode,
-                                                        buildingcode + "_" + String.valueOf(true),
+                                                        email + "_" + String.valueOf(true),
                                                         true
                                                 );
 
@@ -215,6 +216,7 @@ public class AddBuilding4Fragment extends Fragment {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
+                                                            pd.dismiss();
                                                             Navigation.findNavController(view).navigate(AddBuilding4FragmentDirections.navigateToHomeFromAddBuilding3());
                                                             Toast.makeText(getContext(), "Successfull", Toast.LENGTH_LONG).show();
                                                         } else {
