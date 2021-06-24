@@ -1,25 +1,57 @@
 package com.project.buildingapp.fragments;
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.project.buildingapp.R;
+import com.project.buildingapp.models.Building;
+import com.project.buildingapp.models.Certifications;
+import com.project.buildingapp.models.Session;
 import com.project.buildingapp.utils.BottomNavLocker;
 import com.project.buildingapp.utils.ToolBarLocker;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class DocumentsFragment extends Fragment {
@@ -37,6 +69,16 @@ public class DocumentsFragment extends Fragment {
     private EditText txtKraCertification, txtNemaCertification, txtSanitationCertification, txtFireSafetyCertification, txtInspectionCertification;
     private Button btnKraUpload, btnNemaUpload, btnSanitationUpload, btnFireSafetyUpload, btnInspectionUpload;
 
+    private String email, buildingcode, chooser;
+    private int kra, nema, sanitation, firesafety, inspection;
+    private Uri chooserurl = null, kraurl, nemaurl, sanitationurl, firesafetyurl, inspectionurl;
+    private int SELECT_PDF = 200;
+
+    private FirebaseUser user;
+    private DatabaseReference reference, sessionreference;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_documents, container, false);
@@ -44,6 +86,14 @@ public class DocumentsFragment extends Fragment {
         // set
         ((BottomNavLocker) getActivity()).BottomNavLocked(true);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        email = user.getEmail();
+
+        sessionreference = FirebaseDatabase.getInstance().getReference().child("table_session");
+        reference = FirebaseDatabase.getInstance().getReference().child("table_certification");
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         // find view by id
         lytKraHeading = view.findViewById(R.id.lyt_heading_kracertification);
@@ -96,7 +146,7 @@ public class DocumentsFragment extends Fragment {
         btnInspectionUpload = view.findViewById(R.id.btn_inspection_upload);
 
         // set / load data
-
+        loadData();
 
         // listeners
         imgKraPlus.setOnClickListener(kraVisibilityListener);
@@ -104,6 +154,12 @@ public class DocumentsFragment extends Fragment {
         imgSanitationPlus.setOnClickListener(sanitationVisibilityListener);
         imgFireSafetyPlus.setOnClickListener(fireSafetyVisibilityListener);
         imgInspectionPlus.setOnClickListener(inspectionVisibilityListener);
+
+        imgKraUploadDoc.setOnClickListener(kraUploadListener);
+        imgNemaUploadDoc.setOnClickListener(nemaUploadListener);
+        imgFireSafetyUploadDoc.setOnClickListener(fireSafetyUploadListener);
+        imgSanitationUploadDoc.setOnClickListener(sanitationUploadListener);
+        imgInspectionUploadDoc.setOnClickListener(inspectionUploadListener);
 
         btnKraUpload.setOnClickListener(kraListener);
         btnNemaUpload.setOnClickListener(nemaListener);
@@ -117,35 +173,35 @@ public class DocumentsFragment extends Fragment {
     private View.OnClickListener kraListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            kraUploadData();
         }
     };
 
     private View.OnClickListener nemaListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            nemaUploadData();
         }
     };
 
     private View.OnClickListener sanitationListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            sanitationUploadData();
         }
     };
 
     private View.OnClickListener fireSafetyListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            firesafetyUploadData();
         }
     };
 
     private View.OnClickListener inspectionListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            inspectionUploadData();
         }
     };
 
@@ -160,6 +216,7 @@ public class DocumentsFragment extends Fragment {
             visible = !visible;
             imgKraPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
             lytKraBody.setVisibility(visible ? View.VISIBLE : View.GONE);
+            txtKraCertification.setError(visible ? null : null);
         }
     };
 
@@ -172,6 +229,7 @@ public class DocumentsFragment extends Fragment {
             visible = !visible;
             imgNemaPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
             lytNemaBody.setVisibility(visible ? View.VISIBLE : View.GONE);
+            txtNemaCertification.setError(visible ? null : null);
         }
     };
 
@@ -184,6 +242,7 @@ public class DocumentsFragment extends Fragment {
             visible = !visible;
             imgSanitationPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
             lytSanitationBody.setVisibility(visible ? View.VISIBLE : View.GONE);
+            txtSanitationCertification.setError(visible ? null : null);
         }
     };
 
@@ -196,6 +255,7 @@ public class DocumentsFragment extends Fragment {
             visible = !visible;
             imgFireSafetyPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
             lytFireSafetyBody.setVisibility(visible ? View.VISIBLE : View.GONE);
+            txtFireSafetyCertification.setError(visible ? null : null);
         }
     };
 
@@ -208,6 +268,303 @@ public class DocumentsFragment extends Fragment {
             visible = !visible;
             imgInspectionPlus.setImageResource(visible ? R.drawable.ic_baseline_minus_24 : R.drawable.ic_baseline_add_24);
             lytInspectionBody.setVisibility(visible ? View.VISIBLE : View.GONE);
+            txtInspectionCertification.setError(visible ? null : null);
         }
     };
+
+    // Upload data
+
+    private void kraUploadData() {
+        uploadToFirebase("kra", txtKraCertification, tvKraContext, kraurl);
+    }
+
+
+    private void nemaUploadData() {
+        uploadToFirebase("nema", txtNemaCertification, tvNemaContext, nemaurl);
+    }
+
+    private void firesafetyUploadData() {
+        uploadToFirebase("firesafety", txtFireSafetyCertification, tvFireSafetyContext, firesafetyurl);
+    }
+
+    private void sanitationUploadData() {
+        uploadToFirebase("sanitation", txtSanitationCertification, tvSanitationContext, sanitationurl);
+    }
+
+    private void inspectionUploadData() {
+        uploadToFirebase("inspection", txtInspectionCertification, tvInspectionContext, inspectionurl);
+    }
+
+
+    // load all data
+
+    private void loadData() {
+        sessionreference.orderByChild("email_status").equalTo(email + "_true").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (snapshot != null) {
+                    Session session = snapshot.getValue(Session.class);
+                    buildingcode = session.getBuildingcode();
+
+                    kraLoad();
+                    nemaLoad();
+                    firesafetyLoad();
+                    sanitationLoad();
+                    inspectionLoad();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+    // load data
+
+    private void kraLoad() {
+        loadFirebaseData("kra", txtKraCertification, tvKraContext);
+    }
+
+    private void nemaLoad() {
+        loadFirebaseData("nema", txtNemaCertification, tvNemaContext);
+    }
+
+    private void sanitationLoad() {
+        loadFirebaseData("sanitation", txtSanitationCertification, tvSanitationContext);
+    }
+
+    private void firesafetyLoad() {
+        loadFirebaseData("firesafety", txtFireSafetyCertification, tvFireSafetyContext);
+    }
+
+    private void inspectionLoad() {
+        loadFirebaseData("inspection", txtInspectionCertification, tvInspectionContext);
+    }
+
+    // upload listener
+    private View.OnClickListener kraUploadListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            pdfChooser("kra");
+        }
+    };
+
+    private View.OnClickListener nemaUploadListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            pdfChooser("nema");
+        }
+    };
+
+    private View.OnClickListener fireSafetyUploadListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            pdfChooser("firesafety");
+        }
+    };
+
+    private View.OnClickListener sanitationUploadListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            pdfChooser("sanitation");
+        }
+    };
+
+    private View.OnClickListener inspectionUploadListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            pdfChooser("inspection");
+        }
+    };
+
+
+    // upload photo
+    private void pdfChooser(String chooser) {
+
+        this.chooser = chooser;
+
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_PDF);
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == SELECT_PDF && data != null && data.getData() != null) {
+
+            this.chooserurl = data.getData();
+
+            if (chooser == "kra") {
+                kraurl = chooserurl;
+            } else if (chooser == "nema") {
+                nemaurl = chooserurl;
+            } else if (chooser == "firesafety") {
+                firesafetyurl = chooserurl;
+            } else if (chooser == "sanitation") {
+                sanitationurl = chooserurl;
+            } else if (chooser == "inspection") {
+                inspectionurl = chooserurl;
+            }
+
+            Toast.makeText(getContext(), this.chooser + " pdf uploaded", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Error uploading document", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void loadFirebaseData(String chooser, EditText txtCertification, TextView tvContext) {
+        reference.orderByChild("buildingcode_certificate").equalTo(buildingcode + "_" + chooser).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (snapshot != null) {
+                    Certifications certifications = snapshot.getValue(Certifications.class);
+
+                    txtCertification.setText(certifications.getCertificateno());
+
+                    if (certifications.getStatus() == 0) {
+                        tvContext.setText("Uploaded");
+                        tvContext.setVisibility(View.VISIBLE);
+                    } else if (certifications.getStatus() == 1) {
+                        tvContext.setText("Approved");
+                        tvContext.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    tvContext.setText(null);
+                    tvContext.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void uploadToFirebase(String chooser, EditText txtChooser, TextView tvContext, Uri selecteduri) {
+
+        String certificateno = txtChooser.getText().toString().trim();
+
+        if (!certificateno.isEmpty()) {
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Do you wish to proceed");
+            builder.setMessage("Upload " + chooser + " data");
+            builder.setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    ProgressDialog pd = new ProgressDialog(getContext());
+                    final StorageReference ref = storageReference.child("BuildingCertifications/" + buildingcode + "/" + chooser + "_" + System.currentTimeMillis() + "." + getFileExtension(selecteduri));
+
+                    pd.setTitle("Building Data");
+                    pd.setMessage("Uploading " + chooser + " data....");
+
+                    pd.show();
+
+                    ref.putFile(selecteduri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+
+                                    Certifications certifications;
+                                    if (uri == null) {
+                                        certifications = new Certifications(
+                                                buildingcode,
+                                                buildingcode + "_" + chooser,
+                                                certificateno,
+                                                buildingcode + "_" + chooser + "_0",
+                                                0
+                                        );
+                                    } else {
+                                        certifications = new Certifications(
+                                                buildingcode,
+                                                buildingcode + "_" + chooser,
+                                                certificateno,
+                                                buildingcode + "_" + chooser + "_0",
+                                                uri.toString(),
+                                                0
+                                        );
+                                    }
+
+                                    reference.push().setValue(certifications).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getContext(), "Uploaded " + chooser + " successfully", Toast.LENGTH_SHORT).show();
+                                                tvContext.setVisibility(View.VISIBLE);
+                                                tvContext.setText("Approved");
+                                                pd.dismiss();
+                                            } else {
+                                                pd.dismiss();
+                                                Toast.makeText(getContext(), "Error Sending " + chooser + " data", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            txtChooser.setError("Enter certificate no");
+        }
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cr = (getActivity()).getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+
+        return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
+    }
+
 }

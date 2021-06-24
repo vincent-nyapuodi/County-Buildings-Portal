@@ -174,7 +174,8 @@
                     android:text="0/ 5"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_medium"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginLeft="@dimen/spacing_2"/>
 
                 <TextView
                     android:id="@+id/tv_approvalview"
@@ -187,31 +188,6 @@
                     android:padding="@dimen/padding_x_small" />
 
             </RelativeLayout>
-
-            <com.shuhart.stepview.StepView
-                android:id="@+id/stepview_approval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_3"
-                android:paddingVertical="15dp"
-                app:sv_animationType="Line"
-                app:sv_doneCircleColor="@android:color/darker_gray"
-                app:sv_doneCircleRadius="14dp"
-                app:sv_doneStepLineColor="@android:color/darker_gray"
-                app:sv_doneStepMarkColor="@color/orange"
-                app:sv_doneTextColor="@color/orange"
-                app:sv_nextStepLineColor="@color/orange"
-                app:sv_nextTextColor="@color/red"
-                app:sv_selectedCircleColor="@color/red"
-                app:sv_selectedCircleRadius="14dp"
-                app:sv_selectedStepNumberColor="@color/orange"
-                app:sv_selectedTextColor="@color/orange"
-                app:sv_stepLineWidth="2dp"
-                app:sv_stepNumberTextSize="14sp"
-                app:sv_stepPadding="4dp"
-                app:sv_stepViewStyle="@style/StepView"
-                app:sv_stepsNumber="4"
-                app:sv_textSize="15dp" />
 
         </LinearLayout>
 

@@ -168,7 +168,7 @@ public class AddBuilding4Fragment extends Fragment {
         final StorageReference ref = storageReference.child("BuildingImages/" + System.currentTimeMillis() + "." + getFileExtension(uri));
 
         pd.setTitle("Building Data");
-        pd.setMessage("Updating data....");
+        pd.setMessage("Uploading building data....");
 
         pd.show();
 

@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.buildingapp.R;
 import com.project.buildingapp.models.Building;
 import com.project.buildingapp.models.Session;
@@ -27,18 +28,20 @@ import com.project.buildingapp.utils.BottomNavLocker;
 import com.project.buildingapp.utils.ToolBarLocker;
 import com.shuhart.stepview.StepView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeFragment extends Fragment {
 
     private View view;
     
     private TextView tvBuildingName, tvBuildingLocation, tvBuildingApproved, tvDocumentProgress, tvApprovalProgress, tvApprovalView;
     private Button btnUploadDocuments;
-    private StepView stepViewApproval;
 
     private String email, buildingcode, location, buildingname;
 
     private FirebaseUser user;
-    private DatabaseReference reference, sessionreference;
+    private DatabaseReference reference, sessionreference, certificationreference;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -50,10 +53,9 @@ public class HomeFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         email = user.getEmail();
 
-        Toast.makeText(getContext(), "Email = " + email, Toast.LENGTH_SHORT).show();
-
         reference = FirebaseDatabase.getInstance().getReference().child("table_building");
         sessionreference = FirebaseDatabase.getInstance().getReference().child("table_session");
+        certificationreference = FirebaseDatabase.getInstance().getReference().child("table_certification");
 
         // find view by id
         tvBuildingName = view.findViewById(R.id.tv_buildingname);
@@ -63,7 +65,6 @@ public class HomeFragment extends Fragment {
         tvApprovalProgress = view.findViewById(R.id.tv_approvalprogress);
         tvApprovalView = view.findViewById(R.id.tv_approvalview);
         btnUploadDocuments = view.findViewById(R.id.btn_upload_documents);
-        stepViewApproval = view.findViewById(R.id.stepview_approval);
 
         // set / load data
         loadBuildingData();
@@ -135,6 +136,23 @@ public class HomeFragment extends Fragment {
 
                     }
                 });
+
+                certificationreference.orderByChild("buildingcode").equalTo(buildingcode).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int number = 0;
+                        if (snapshot != null) {
+                            number = (int) snapshot.getChildrenCount();
+                        }
+
+                        tvDocumentProgress.setText(String.valueOf(number) + "/ 5");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
 
             @Override
@@ -157,5 +175,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
     }
 }
