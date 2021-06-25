@@ -3,12 +3,13 @@ package com.project.buildingapp.models;
 public class Building {
 
     private String owneremail, owneremail_buildingcode, buildingcode, buildingtype, buildingname, buildingcounty, buildingtown, buildingdesc, buildingphoto;
+    private int check_status;
 
     public Building() {
 
     }
 
-    public Building(String owneremail, String owneremail_buildingcode, String buildingcode, String buildingtype, String buildingname, String buildingcounty, String buildingtown, String buildingdesc, String buildingphoto) {
+    public Building(String owneremail, String owneremail_buildingcode, String buildingcode, String buildingtype, String buildingname, String buildingcounty, String buildingtown, String buildingdesc, String buildingphoto, int check_status) {
         this.owneremail = owneremail;
         this.owneremail_buildingcode = owneremail_buildingcode;
         this.buildingcode = buildingcode;
@@ -18,6 +19,7 @@ public class Building {
         this.buildingtown = buildingtown;
         this.buildingdesc = buildingdesc;
         this.buildingphoto = buildingphoto;
+        this.check_status = check_status;
     }
 
     public String getOwneremail() {
@@ -90,5 +92,13 @@ public class Building {
 
     public void setBuildingphoto(String buildingphoto) {
         this.buildingphoto = buildingphoto;
+    }
+
+    public int getCheck_status() {
+        return check_status;
+    }
+
+    public void setCheck_status(int check_status) {
+        this.check_status = check_status;
     }
 }

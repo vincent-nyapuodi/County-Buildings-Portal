@@ -5,6 +5,10 @@ public class CareTaker {
     private String owneremail, owneremail_caretakeremail, caretakeremail, caretakername;
     private int caretakerphone;
 
+    public CareTaker() {
+
+    }
+
     public CareTaker(String owneremail, String owneremail_caretakeremail, String caretakeremail, String caretakername, int caretakerphone) {
         this.owneremail = owneremail;
         this.owneremail_caretakeremail = owneremail_caretakeremail;

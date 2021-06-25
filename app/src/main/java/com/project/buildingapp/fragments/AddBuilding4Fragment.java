@@ -186,7 +186,8 @@ public class AddBuilding4Fragment extends Fragment {
                                 buildingcounty,
                                 buildingtown,
                                 buildingdescription,
-                                uri.toString());
+                                uri.toString(),
+                                0);
 
                         reference.push().setValue(building).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

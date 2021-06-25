@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/padding"
     android:background="@color/white"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:padding="@dimen/padding"
     tools:context=".fragments.LoginFragment">
 
     <ImageView
@@ -85,8 +85,8 @@
         android:background="@drawable/round_button"
         android:text="Login"
         android:textAllCaps="false"
-        android:textSize="@dimen/text_medium"
         android:textColor="@color/white"
+        android:textSize="@dimen/text_medium"
         android:textStyle="bold" />
 
     <RelativeLayout
