@@ -2,26 +2,26 @@ package com.project.buildingapp.models;
 
 public class Certifications {
 
-    private String buildingcode, buildingcode_certificate, certificateno, certificateurl, buildingcode_certificate_status;
+    private String buildingcode, buildingcode_certificate, certificateno, certificateurl, buildingcode_status;
     private int status;
 
     public Certifications() {
     }
 
-    public Certifications(String buildingcode, String buildingcode_certificate, String certificateno, String buildingcode_certificate_status, int status) {
+    public Certifications(String buildingcode, String buildingcode_certificate, String certificateno, String buildingcode_status, int status) {
         this.buildingcode = buildingcode;
         this.buildingcode_certificate = buildingcode_certificate;
         this.certificateno = certificateno;
-        this.buildingcode_certificate_status = buildingcode_certificate_status;
+        this.buildingcode_status = buildingcode_status;
         this.status = status;
     }
 
-    public Certifications(String buildingcode, String buildingcode_certificate, String certificateno, String buildingcode_certificate_status, String certificateurl, int status) {
+    public Certifications(String buildingcode, String buildingcode_certificate, String certificateno, String buildingcode_status, String certificateurl, int status) {
         this.buildingcode = buildingcode;
         this.buildingcode_certificate = buildingcode_certificate;
         this.certificateno = certificateno;
         this.certificateurl = certificateurl;
-        this.buildingcode_certificate_status = buildingcode_certificate_status;
+        this.buildingcode_status = buildingcode_status;
         this.status = status;
     }
 
@@ -57,12 +57,12 @@ public class Certifications {
         this.certificateurl = certificateurl;
     }
 
-    public String getBuildingcode_certificate_status() {
-        return buildingcode_certificate_status;
+    public String getBuildingcode_status() {
+        return buildingcode_status;
     }
 
-    public void setBuildingcode_certificate_status(String buildingcode_certificate_status) {
-        this.buildingcode_certificate_status = buildingcode_certificate_status;
+    public void setBuildingcode_status(String buildingcode_status) {
+        this.buildingcode_status = buildingcode_status;
     }
 
     public int getStatus() {

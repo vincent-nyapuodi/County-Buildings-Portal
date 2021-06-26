@@ -171,11 +171,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/spacing_2"
                     android:text="0/ 5"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_medium"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="@dimen/spacing_2"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_approvalview"

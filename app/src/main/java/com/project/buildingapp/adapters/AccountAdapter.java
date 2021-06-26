@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.project.buildingapp.R;
 import com.project.buildingapp.models.Building;
+import com.project.buildingapp.models.Contractor;
 
 public class AccountAdapter extends FirebaseRecyclerAdapter<Building, AccountAdapter.MyViewHolder> {
 

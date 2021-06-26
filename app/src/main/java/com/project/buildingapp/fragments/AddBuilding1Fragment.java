@@ -41,10 +41,10 @@ public class AddBuilding1Fragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_add_building1, container, false);
 
         // set
-        //((ToolBarLocker) getActivity()).ToolBarLocked(false);
-        //((BottomNavLocker) getActivity()).BottomNavLocked(true);
+        ((ToolBarLocker) getActivity()).ToolBarLocked(false);
+        ((BottomNavLocker) getActivity()).BottomNavLocked(true);
 
-        //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add Building");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add Building");
 
         // find view by id
         rdgPrivate = view.findViewById(R.id.rdg_private);

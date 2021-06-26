@@ -38,6 +38,7 @@ import com.google.firebase.storage.UploadTask;
 import com.project.buildingapp.R;
 import com.project.buildingapp.models.Building;
 import com.project.buildingapp.models.CareTaker;
+import com.project.buildingapp.models.Contractor;
 import com.project.buildingapp.models.Session;
 import com.project.buildingapp.utils.BottomNavLocker;
 import com.project.buildingapp.utils.ToolBarLocker;
@@ -52,13 +53,14 @@ public class AddBuilding4Fragment extends Fragment {
     private String email;
     private String buildingname, buildingtype, buildingcounty, buildingtown, buildingdescription, buildingurl;
     private String caretakername, caretakeremail;
+    private String architectname, contractorname, supervisorname;
     private int caretakerphone;
     private int maxid = 0;
     private Uri uri;
 
     private AddBuilding4FragmentArgs args;
 
-    private DatabaseReference reference, caretakerrefence, sessionreference;
+    private DatabaseReference reference, caretakerrefence, sessionreference, contractorreference;
     private FirebaseUser user;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -77,6 +79,7 @@ public class AddBuilding4Fragment extends Fragment {
         reference = FirebaseDatabase.getInstance().getReference().child("table_building");
         caretakerrefence = FirebaseDatabase.getInstance().getReference().child("table_caretaker");
         sessionreference = FirebaseDatabase.getInstance().getReference().child("table_session");
+        contractorreference = FirebaseDatabase.getInstance().getReference().child("table_contractor");
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -126,9 +129,9 @@ public class AddBuilding4Fragment extends Fragment {
     private View.OnClickListener addBuildingListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String architectname = txtArchitectName.getText().toString().trim();
-            String contractorname = txtContractorName.getText().toString().trim();
-            String supervisorname = txtSupervisorName.getText().toString().trim();
+            architectname = txtArchitectName.getText().toString().trim();
+            contractorname = txtContractorName.getText().toString().trim();
+            supervisorname = txtSupervisorName.getText().toString().trim();
 
             if (architectname.isEmpty()) {
                 txtArchitectName.setError("Text Field is empty");
@@ -187,7 +190,7 @@ public class AddBuilding4Fragment extends Fragment {
                                 buildingtown,
                                 buildingdescription,
                                 uri.toString(),
-                                0);
+                                false);
 
                         reference.push().setValue(building).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -217,20 +220,42 @@ public class AddBuilding4Fragment extends Fragment {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
-                                                            pd.dismiss();
-                                                            Navigation.findNavController(view).navigate(AddBuilding4FragmentDirections.navigateToHomeFromAddBuilding3());
-                                                            Toast.makeText(getContext(), "Successfull", Toast.LENGTH_LONG).show();
+                                                            Contractor contractor = new Contractor(
+                                                                    email,
+                                                                    buildingcode,
+                                                                    email + "_" + buildingcode,
+                                                                    architectname,
+                                                                    supervisorname,
+                                                                    contractorname
+                                                            );
+
+                                                            contractorreference.push().setValue(contractor).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        pd.dismiss();
+                                                                        Navigation.findNavController(view).navigate(AddBuilding4FragmentDirections.navigateToHomeFromAddBuilding3());
+                                                                        Toast.makeText(getContext(), "Successfull", Toast.LENGTH_LONG).show();
+                                                                    } else {
+                                                                        pd.dismiss();
+                                                                        Toast.makeText(getContext(), "Error uploading data", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            });
                                                         } else {
+                                                            pd.dismiss();
                                                             Toast.makeText(getContext(), "Error uploading data", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 });
                                             } else {
+                                                pd.dismiss();
                                                 Toast.makeText(getContext(), "Error Uploading data", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
                                 } else {
+                                    pd.dismiss();
                                     Toast.makeText(getContext(), "Error uploading data", Toast.LENGTH_SHORT).show();
                                 }
                             }

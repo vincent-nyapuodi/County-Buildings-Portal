@@ -404,6 +404,7 @@ public class DocumentsFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
 
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_PDF);
 
@@ -511,7 +512,7 @@ public class DocumentsFragment extends Fragment {
                                                 buildingcode,
                                                 buildingcode + "_" + chooser,
                                                 certificateno,
-                                                buildingcode + "_" + chooser + "_0",
+                                                buildingcode + "_0",
                                                 0
                                         );
                                     } else {
@@ -519,7 +520,7 @@ public class DocumentsFragment extends Fragment {
                                                 buildingcode,
                                                 buildingcode + "_" + chooser,
                                                 certificateno,
-                                                buildingcode + "_" + chooser + "_0",
+                                                buildingcode + "_0",
                                                 uri.toString(),
                                                 0
                                         );
