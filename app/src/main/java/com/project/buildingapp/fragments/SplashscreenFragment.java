@@ -26,13 +26,9 @@ public class SplashscreenFragment extends Fragment {
 
     private View view;
 
-    private FirebaseUser currentUser;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_splashscreen, container, false);
-
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         return view;
     }
@@ -41,24 +37,14 @@ public class SplashscreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (currentUser==null){
-            new Handler().postDelayed(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            Navigation.findNavController(view).navigate(R.id.navigateToLogin);
-                        }
-                    }, 1000
-            );
-        }else {
-            new Handler().postDelayed(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            NavHostFragment.findNavController(getParentFragment()).navigate(SplashscreenFragmentDirections.navigateToSelectFromSplash());
-                        }
-                    }, 1000
-            );
-        }
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        Navigation.findNavController(view).navigate(R.id.navigateToLogin);
+                    }
+                }, 1000
+        );
+
     }
 }

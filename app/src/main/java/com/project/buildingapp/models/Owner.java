@@ -5,6 +5,9 @@ public class Owner {
     private String email, name, owner_id;
     private int phone;
 
+    public Owner() {
+    }
+
     public Owner(String email, String name, String owner_id, int phone) {
         this.email = email;
         this.name = name;

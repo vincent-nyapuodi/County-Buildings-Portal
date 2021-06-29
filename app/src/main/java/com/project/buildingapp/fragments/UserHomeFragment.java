@@ -1,4 +1,4 @@
-package com.project.buildingapp;
+package com.project.buildingapp.fragments;
 
 import android.os.Bundle;
 
@@ -14,9 +14,12 @@ import android.view.ViewGroup;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.project.buildingapp.R;
 import com.project.buildingapp.adapters.UserBuildings;
 import com.project.buildingapp.models.Building;
 import com.project.buildingapp.utils.BottomNavLocker;
+import com.project.buildingapp.utils.ToolBarLocker;
 
 
 public class UserHomeFragment extends Fragment {
@@ -36,11 +39,13 @@ public class UserHomeFragment extends Fragment {
 
         // set
         ((BottomNavLocker) getActivity()).BottomNavLocked(true);
+        ((ToolBarLocker) getActivity()).ToolBarLocked(false);
+
+        reference = FirebaseDatabase.getInstance().getReference().child("table_building");
 
         // find view by id
         recyclerView = view.findViewById(R.id.recyclerview_userview);
         refreshLayout = view.findViewById(R.id.refresh_userhome);
-
 
         // set / load data
         loadData();
@@ -59,6 +64,7 @@ public class UserHomeFragment extends Fragment {
 
         adapter = new UserBuildings(options, getContext());
         recyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 
     private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -67,4 +73,18 @@ public class UserHomeFragment extends Fragment {
             loadData();
         }
     };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (adapter != null) {
+            adapter.stopListening();
+        }
+    }
 }

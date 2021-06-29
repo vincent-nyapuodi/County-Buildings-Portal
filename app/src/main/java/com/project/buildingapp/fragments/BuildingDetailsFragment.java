@@ -1,10 +1,11 @@
-package com.project.buildingapp;
+package com.project.buildingapp.fragments;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.project.buildingapp.R;
 import com.project.buildingapp.models.Approval;
 import com.project.buildingapp.models.Building;
 import com.project.buildingapp.models.Certifications;
 import com.project.buildingapp.utils.BottomNavLocker;
+import com.project.buildingapp.utils.ToolBarLocker;
 
 public class BuildingDetailsFragment extends Fragment {
 
@@ -46,6 +49,7 @@ public class BuildingDetailsFragment extends Fragment {
 
         // set
         ((BottomNavLocker) getActivity()).BottomNavLocked(true);
+        ((ToolBarLocker) getActivity()).ToolBarLocked(false);
 
         args = BuildingDetailsFragmentArgs.fromBundle(getArguments());
 
@@ -94,7 +98,9 @@ public class BuildingDetailsFragment extends Fragment {
     private View.OnClickListener seemoreListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            BuildingDetailsFragmentDirections.ActionBuildingDetailsFragmentToProfileFragment action
+                    = BuildingDetailsFragmentDirections.actionBuildingDetailsFragmentToProfileFragment(buildingrefkey, buildingcode);
+            Navigation.findNavController(view).navigate(action);
         }
     };
 

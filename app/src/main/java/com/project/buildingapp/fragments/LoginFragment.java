@@ -37,7 +37,7 @@ public class LoginFragment extends Fragment {
     private ShowHidePasswordEditText txtPassword;
     private ProgressBar progressBar;
     private Button btnLogin;
-    private TextView tvLogintoregister;
+    private TextView tvLogintoregister, tvUser;
 
     private ValidationsClass validate;
 
@@ -61,6 +61,7 @@ public class LoginFragment extends Fragment {
         tvLogintoregister = view.findViewById(R.id.tv_loginto_register);
         progressBar = view.findViewById(R.id.progressbar_login);
         btnLogin = view.findViewById(R.id.btn_login);
+        tvUser = view.findViewById(R.id.tv_user);
 
         // set/ load data
 
@@ -68,6 +69,7 @@ public class LoginFragment extends Fragment {
         // listeners
         btnLogin.setOnClickListener(loginListener);
         tvLogintoregister.setOnClickListener(registerListener);
+        tvUser.setOnClickListener(userListener);
 
         return view;
     }
@@ -82,6 +84,13 @@ public class LoginFragment extends Fragment {
 
                 loginUser(email, password);
             }
+        }
+    };
+
+    private View.OnClickListener userListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_userHomeFragment);
         }
     };
 

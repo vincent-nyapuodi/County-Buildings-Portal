@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.project.buildingapp.R;
-import com.project.buildingapp.UserHomeFragment;
-import com.project.buildingapp.UserHomeFragmentDirections;
+import com.project.buildingapp.fragments.UserHomeFragmentDirections;
 import com.project.buildingapp.models.Building;
 
 public class UserBuildings extends FirebaseRecyclerAdapter<Building, UserBuildings.MyViewHolder> {

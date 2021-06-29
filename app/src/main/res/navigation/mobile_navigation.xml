@@ -212,18 +212,33 @@
     </fragment>
     <fragment
         android:id="@+id/userHomeFragment"
-        android:name="com.project.buildingapp.UserHomeFragment"
-        android:label="fragment_user_home"
-        tools:layout="@layout/fragment_user_home" >
+        android:name="com.project.buildingapp.fragments.UserHomeFragment"
+        android:label="User Home"
+        tools:layout="@layout/fragment_user_home">
         <action
             android:id="@+id/action_userHomeFragment_to_buildingDetailsFragment"
             app:destination="@id/buildingDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/buildingDetailsFragment"
-        android:name="com.project.buildingapp.BuildingDetailsFragment"
-        android:label="fragment_building_details"
-        tools:layout="@layout/fragment_building_details" >
+        android:name="com.project.buildingapp.fragments.BuildingDetailsFragment"
+        android:label="Building Details"
+        tools:layout="@layout/fragment_building_details">
+        <argument
+            android:name="building_ref_key"
+            app:argType="string" />
+        <argument
+            android:name="building_code"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_buildingDetailsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.project.buildingapp.fragments.ProfileFragment"
+        android:label="Building profile"
+        tools:layout="@layout/fragment_profile">
         <argument
             android:name="building_ref_key"
             app:argType="string" />
