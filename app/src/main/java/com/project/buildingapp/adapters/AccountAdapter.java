@@ -59,7 +59,6 @@ public class AccountAdapter extends FirebaseRecyclerAdapter<Building, AccountAda
                             buildingcode = snapshot.child("buildingcode").getValue().toString();
                         }
 
-                        Toast.makeText(context, "Building code = " + buildingcode, Toast.LENGTH_SHORT).show();
                         reference.orderByChild("buildingcode").equalTo(buildingcode).addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,21 +33,21 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private View view;
-    
+
     private TextView tvBuildingName, tvBuildingLocation, tvBuildingApproved, tvDocumentProgress, tvApprovalProgress, tvApprovalView;
     private Button btnUploadDocuments;
 
     private String email, buildingcode, location, buildingname;
 
     private FirebaseUser user;
-    private DatabaseReference reference, sessionreference, certificationreference;
+    private DatabaseReference reference, sessionreference, certificationreference, approvalreference;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // set
-        ((ToolBarLocker)getActivity()).ToolBarLocked(false);
-        ((BottomNavLocker)getActivity()).BottomNavLocked(false);
+        ((ToolBarLocker) getActivity()).ToolBarLocked(false);
+        ((BottomNavLocker) getActivity()).BottomNavLocked(false);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         email = user.getEmail();
@@ -56,6 +55,7 @@ public class HomeFragment extends Fragment {
         reference = FirebaseDatabase.getInstance().getReference().child("table_building");
         sessionreference = FirebaseDatabase.getInstance().getReference().child("table_session");
         certificationreference = FirebaseDatabase.getInstance().getReference().child("table_certification");
+        approvalreference = FirebaseDatabase.getInstance().getReference().child("table_approval");
 
         // find view by id
         tvBuildingName = view.findViewById(R.id.tv_buildingname);
@@ -143,9 +143,27 @@ public class HomeFragment extends Fragment {
                         int number = 0;
                         if (snapshot != null) {
                             number = (int) snapshot.getChildrenCount();
-                        }
 
-                        tvDocumentProgress.setText(String.valueOf(number) + "/ 5");
+                            tvDocumentProgress.setText(String.valueOf(number) + "/ 5");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                approvalreference.orderByChild("buildingcode").equalTo(buildingcode).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int number = 0;
+
+                        if (snapshot != null) {
+                            number = (int) snapshot.getChildrenCount();
+
+                            tvApprovalProgress.setText(String.valueOf(number) + "/ 5");
+                        }
                     }
 
                     @Override
@@ -176,36 +194,11 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        certificationreference.orderByChild("buildingcode_status").equalTo(buildingcode + "_1").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                int number = 0;
-                if (snapshot != null) {
-                    number = (int) snapshot.getChildrenCount();
-                }
-                tvApprovalProgress.setText(String.valueOf(number) + "/ 5");
-            }
+    }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadBuildingData();
     }
 }

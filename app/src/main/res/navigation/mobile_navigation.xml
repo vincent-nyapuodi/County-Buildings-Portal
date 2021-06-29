@@ -48,6 +48,9 @@
         <action
             android:id="@+id/navigateToRegistration"
             app:destination="@id/registerFragment2" />
+        <action
+            android:id="@+id/action_loginFragment_to_userHomeFragment"
+            app:destination="@id/userHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment2"
@@ -206,5 +209,26 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/splashscreenFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/userHomeFragment"
+        android:name="com.project.buildingapp.UserHomeFragment"
+        android:label="fragment_user_home"
+        tools:layout="@layout/fragment_user_home" >
+        <action
+            android:id="@+id/action_userHomeFragment_to_buildingDetailsFragment"
+            app:destination="@id/buildingDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/buildingDetailsFragment"
+        android:name="com.project.buildingapp.BuildingDetailsFragment"
+        android:label="fragment_building_details"
+        tools:layout="@layout/fragment_building_details" >
+        <argument
+            android:name="building_ref_key"
+            app:argType="string" />
+        <argument
+            android:name="building_code"
+            app:argType="string" />
     </fragment>
 </navigation>

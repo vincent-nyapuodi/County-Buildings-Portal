@@ -97,8 +97,21 @@
             android:id="@+id/tv_loginto_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:text="Register"
             android:textColor="@color/purple_700"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:text="Normal user"
+            android:textColor="@color/dark_blue"
             android:textSize="@dimen/text_medium"
             android:textStyle="normal" />
 
