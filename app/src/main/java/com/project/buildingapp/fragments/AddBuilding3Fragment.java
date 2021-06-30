@@ -94,8 +94,6 @@ public class AddBuilding3Fragment extends Fragment {
                     action.setCaretakerName(name);
                     action.setCaretakerPhone(phoneno);
                     Navigation.findNavController(view).navigate(action);
-
-                    Toast.makeText(getContext(), "Building details = " + buildingcounty + ", ur = " + buildingurl, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "There is an error", Toast.LENGTH_SHORT).show();
                 }

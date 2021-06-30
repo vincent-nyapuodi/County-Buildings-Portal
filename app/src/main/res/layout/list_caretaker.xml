@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_1"
-            android:text="John Doe"
+            android:text="null"
             android:textColor="@color/darkgreen"
             android:textSize="@dimen/text_medium"
             android:textStyle="bold" />
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:text="0712 345678"
+                android:text="null"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_medium_small"
                 android:textStyle="bold" />
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
-                android:text="name@email.com"
+                android:text="null"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_medium_small"
                 android:textStyle="bold" />

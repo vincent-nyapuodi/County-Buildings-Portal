@@ -80,17 +80,35 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_kra_context"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_verified_24"
-                    android:drawablePadding="@dimen/spacing_1"
-                    android:drawableTint="@color/darkgreen"
-                    android:text="Approved"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"
-                    android:visibility="gone" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_kra_context"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_verified_24"
+                        android:drawablePadding="@dimen/spacing_1"
+                        android:drawableTint="@color/darkgreen"
+                        android:text="Approved"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_kra_feedback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_verified_24"
+                        android:drawablePadding="@dimen/spacing_1"
+                        android:drawableTint="@color/darkgreen"
+                        android:text="Feedback"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -202,17 +220,35 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_nema_context"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_verified_24"
-                    android:drawablePadding="@dimen/spacing_1"
-                    android:drawableTint="@color/darkgreen"
-                    android:text="Approved"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"
-                    android:visibility="gone" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_nema_context"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_verified_24"
+                        android:drawablePadding="@dimen/spacing_1"
+                        android:drawableTint="@color/darkgreen"
+                        android:text="Approved"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_nema_feedback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_verified_24"
+                        android:drawablePadding="@dimen/spacing_1"
+                        android:drawableTint="@color/darkgreen"
+                        android:text="Feedback"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -324,17 +360,35 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_sanitation_context"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_verified_24"
-                    android:drawablePadding="@dimen/spacing_1"
-                    android:drawableTint="@color/darkgreen"
-                    android:text="Approved"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"
-                    android:visibility="gone" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_sanitation_context"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_verified_24"
+                        android:drawablePadding="@dimen/spacing_1"
+                        android:drawableTint="@color/darkgreen"
+                        android:text="Approved"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_sanitation_feedback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_verified_24"
+                        android:drawablePadding="@dimen/spacing_1"
+                        android:drawableTint="@color/darkgreen"
+                        android:text="Feedback"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -446,17 +500,35 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_firesafety_context"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_verified_24"
-                    android:drawablePadding="@dimen/spacing_1"
-                    android:drawableTint="@color/darkgreen"
-                    android:text="Approved"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"
-                    android:visibility="gone" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_firesafety_context"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_verified_24"
+                        android:drawablePadding="@dimen/spacing_1"
+                        android:drawableTint="@color/darkgreen"
+                        android:text="Approved"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_firesafety_feedback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_verified_24"
+                        android:drawablePadding="@dimen/spacing_1"
+                        android:drawableTint="@color/darkgreen"
+                        android:text="Feedback"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -569,17 +641,35 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_inspection_context"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_baseline_verified_24"
-                    android:drawablePadding="@dimen/spacing_1"
-                    android:drawableTint="@color/darkgreen"
-                    android:text="Approved"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_small"
-                    android:visibility="gone" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_inspection_context"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_verified_24"
+                        android:drawablePadding="@dimen/spacing_1"
+                        android:drawableTint="@color/darkgreen"
+                        android:text="Approved"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_inspection_feedback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_verified_24"
+                        android:drawablePadding="@dimen/spacing_1"
+                        android:drawableTint="@color/darkgreen"
+                        android:text="Feedback"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"

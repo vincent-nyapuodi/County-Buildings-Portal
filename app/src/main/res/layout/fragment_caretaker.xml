@@ -44,33 +44,8 @@
             android:id="@+id/recyclerview_caretaker"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/cardview_add_caretaker"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardview_add_caretaker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            app:cardBackgroundColor="@color/lightgray"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="4dp"
-            app:cardUseCompatPadding="true"
-            app:contentPadding="8dp">
-
-            <TextView
-                android:id="@+id/tv_add_caretaker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingHorizontal="@dimen/padding"
-                android:paddingVertical="@dimen/padding_small"
-                android:text="Add Caretaker"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_medium_small"
-                android:textStyle="bold" />
-
-        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 

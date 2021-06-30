@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.provider.ContactsContract;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +64,7 @@ public class DocumentsFragment extends Fragment {
     private RelativeLayout lytKraHeading, lytNemaHeading, lytSanitationHeading, lytFireSafetyHeading, lytInspectionHeading; // TODO : transition on click
     private LinearLayout lytKraBody, lytNemaBody, lytSanitationBody, lytFireSafetyBody, lytInspectionBody, lytData; // TODO : make visible on click header
     private TextView tvKraContext, tvNemaContext, tvSanitationContext, tvFireSafetyContext, tvInspectionContext;  // TODO : made visible on upload / approve
+    private TextView tvKraFeedback, tvNemaFeedback, tvSanitationFeedback, tvFireSafetyFeedback, tvInspectionFeedback;  // TODO : made visible on upload / approve
     private ImageView imgKraPlus, imgNemaPlus, imgSanitationPlus, imgFireSafetyPlus, imgInspectionPlus; // TODO : switch btn minus and plus
     private ImageView imgKraUploadDoc, imgNemaUploadDoc, imgSanitationUploadDoc, imgFireSafetyUploadDoc, imgInspectionUploadDoc;
     private TextView tvKraUploadDoc, tvNemaUploadDoc, tvSanitationUploadDoc, tvFireSafetyUploadDoc, tvInspectionUploadDoc;
@@ -75,7 +77,7 @@ public class DocumentsFragment extends Fragment {
     private int SELECT_PDF = 200;
 
     private FirebaseUser user;
-    private DatabaseReference reference, sessionreference;
+    private DatabaseReference reference, sessionreference, feedbackreference;
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
@@ -91,6 +93,7 @@ public class DocumentsFragment extends Fragment {
 
         sessionreference = FirebaseDatabase.getInstance().getReference().child("table_session");
         reference = FirebaseDatabase.getInstance().getReference().child("table_certification");
+        feedbackreference = FirebaseDatabase.getInstance().getReference().child("table_comments");
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -114,6 +117,12 @@ public class DocumentsFragment extends Fragment {
         tvSanitationContext = view.findViewById(R.id.tv_sanitation_context);
         tvFireSafetyContext = view.findViewById(R.id.tv_firesafety_context);
         tvInspectionContext = view.findViewById(R.id.tv_inspection_context);
+
+        tvKraFeedback = view.findViewById(R.id.tv_kra_feedback);
+        tvNemaFeedback = view.findViewById(R.id.tv_nema_feedback);
+        tvSanitationFeedback = view.findViewById(R.id.tv_sanitation_feedback);
+        tvFireSafetyFeedback = view.findViewById(R.id.tv_firesafety_feedback);
+        tvInspectionFeedback = view.findViewById(R.id.tv_inspection_feedback);
 
         imgKraPlus = view.findViewById(R.id.img_kra_plus);
         imgNemaPlus = view.findViewById(R.id.img_nema_plus);
@@ -166,6 +175,12 @@ public class DocumentsFragment extends Fragment {
         btnSanitationUpload.setOnClickListener(sanitationListener);
         btnFireSafetyUpload.setOnClickListener(fireSafetyListener);
         btnInspectionUpload.setOnClickListener(inspectionListener);
+
+        tvKraFeedback.setOnClickListener(kraFeedbackListener);
+        tvSanitationFeedback.setOnClickListener(nemaFeedbackListener);
+        tvFireSafetyFeedback.setOnClickListener(firesafetyFeedbackListener);
+        tvSanitationFeedback.setOnClickListener(sanitationFeedbackListener);
+        tvInspectionFeedback.setOnClickListener(inspectionFeedbackListener);
 
         return view;
     }
@@ -272,6 +287,51 @@ public class DocumentsFragment extends Fragment {
         }
     };
 
+    private View.OnClickListener kraFeedbackListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            DocumentsFragmentDirections.NavigateToFeedback action
+                    = DocumentsFragmentDirections.navigateToFeedback(buildingcode + "_kra", "kra");
+            NavHostFragment.findNavController(getParentFragment()).navigate(action);
+        }
+    };
+
+    private View.OnClickListener nemaFeedbackListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            DocumentsFragmentDirections.NavigateToFeedback action
+                    = DocumentsFragmentDirections.navigateToFeedback(buildingcode + "_nema", "nema");
+            NavHostFragment.findNavController(getParentFragment()).navigate(action);
+        }
+    };
+
+    private View.OnClickListener firesafetyFeedbackListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            DocumentsFragmentDirections.NavigateToFeedback action
+                    = DocumentsFragmentDirections.navigateToFeedback(buildingcode + "_feedback", "feedback");
+            NavHostFragment.findNavController(getParentFragment()).navigate(action);
+        }
+    };
+
+    private View.OnClickListener sanitationFeedbackListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            DocumentsFragmentDirections.NavigateToFeedback action
+                    = DocumentsFragmentDirections.navigateToFeedback(buildingcode + "_sanitation", "sanitation");
+            NavHostFragment.findNavController(getParentFragment()).navigate(action);
+        }
+    };
+
+    private View.OnClickListener inspectionFeedbackListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            DocumentsFragmentDirections.NavigateToFeedback action
+                    = DocumentsFragmentDirections.navigateToFeedback(buildingcode + "_inspection", "inspection");
+            NavHostFragment.findNavController(getParentFragment()).navigate(action);
+        }
+    };
+
     // Upload data
 
     private void kraUploadData() {
@@ -334,6 +394,12 @@ public class DocumentsFragment extends Fragment {
 
             }
         });
+
+        checkComments(feedbackreference, "kra", tvKraFeedback);
+        checkComments(feedbackreference, "nema", tvNemaFeedback);
+        checkComments(feedbackreference, "sanitation", tvSanitationFeedback);
+        checkComments(feedbackreference, "firesafety", tvFireSafetyFeedback);
+        checkComments(feedbackreference, "inspection", tvInspectionFeedback);
     }
 
 
@@ -559,6 +625,37 @@ public class DocumentsFragment extends Fragment {
         } else {
             txtChooser.setError("Enter certificate no");
         }
+    }
+
+    private void checkComments(DatabaseReference reference, String certificate, TextView tvFeedback){
+        reference.orderByChild("buildingcode_certificate").equalTo(buildingcode + "_" + certificate).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (snapshot != null) {
+                    tvFeedback.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private String getFileExtension(Uri uri) {

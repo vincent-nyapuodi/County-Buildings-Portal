@@ -2,11 +2,16 @@ package com.project.buildingapp.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +35,6 @@ public class CaretakerFragment extends Fragment {
     private View view;
 
     private RecyclerView recyclerView;
-    private TextView tvAddCaretaker;
 
     private String email;
 
@@ -38,6 +42,13 @@ public class CaretakerFragment extends Fragment {
     private CareTakerAdapter adapter;
     private FirebaseRecyclerOptions<CareTaker> options;
     private DatabaseReference reference;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_caretaker, container, false);
@@ -52,23 +63,42 @@ public class CaretakerFragment extends Fragment {
 
         // find view by id
         recyclerView = view.findViewById(R.id.recyclerview_caretaker);
-        tvAddCaretaker = view.findViewById(R.id.tv_add_caretaker);
 
         // set / load data
         loadData();
 
         // listeners
-        tvAddCaretaker.setOnClickListener(addListener);
 
         return view;
     }
 
-    private View.OnClickListener addListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Navigation.findNavController(view).navigate(R.id.navigateToAddCaretakerFromCaretaker);
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.menu, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+
+        MenuItem logout = menu.findItem(R.id.menu_logout);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.menu_logout:
+                Navigation.findNavController(view).navigate(R.id.navigateToLoginFromCaretaker);
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(getContext(), "You have Logged out", Toast.LENGTH_SHORT).show();
+                break;
         }
-    };
+
+        return true;
+    }
 
     private String getEmail(){
         if (user != null) {
