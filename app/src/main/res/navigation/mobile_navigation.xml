@@ -67,8 +67,8 @@
             android:id="@+id/navigateToRegistration"
             app:destination="@id/registerFragment2" />
         <action
-            android:id="@+id/action_loginFragment_to_userHomeFragment"
-            app:destination="@id/userHomeFragment" />
+            android:id="@+id/navigateToUserLogin"
+            app:destination="@id/userLoginFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment2"
@@ -279,5 +279,14 @@
         <argument
             android:name="certificate"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/userLoginFragment"
+        android:name="com.project.buildingapp.fragments.UserLoginFragment"
+        android:label="fragment_user_login"
+        tools:layout="@layout/fragment_user_login" >
+        <action
+            android:id="@+id/navigateToUserHome"
+            app:destination="@id/userHomeFragment" />
     </fragment>
 </navigation>

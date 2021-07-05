@@ -6,102 +6,107 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.project.buildingapp.R;
+import com.project.buildingapp.models.NormalUser;
 import com.project.buildingapp.utils.BottomNavLocker;
-import com.project.buildingapp.utils.ToolBarLocker;
 import com.project.buildingapp.utils.ValidationsClass;
 import com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText;
 
-public class LoginFragment extends Fragment {
+import org.jetbrains.annotations.NotNull;
+
+
+public class UserRegisterFragment extends Fragment {
 
     private View view;
 
-    private EditText txtEmail;
+    private EditText txtName, txtEmail;
     private ShowHidePasswordEditText txtPassword;
     private ProgressBar progressBar;
-    private Button btnLogin;
-    private TextView tvLogintoregister, tvUser;
+    private Button btnRegister;
 
     private ValidationsClass validate;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference reference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_login, container, false);
+        view = inflater.inflate(R.layout.fragment_user_register, container, false);
 
         // set
-        ((ToolBarLocker)getActivity()).ToolBarLocked(true);
-        ((BottomNavLocker)getActivity()).BottomNavLocked(true);
-
-        mAuth = FirebaseAuth.getInstance();
-
+        ((BottomNavLocker) getActivity()).BottomNavLocked(true);
         validate = new ValidationsClass();
 
-        // find view by id
-        txtEmail = view.findViewById(R.id.txt_login_email);
-        txtPassword = view.findViewById(R.id.txt_login_password);
-        tvLogintoregister = view.findViewById(R.id.tv_loginto_register);
-        progressBar = view.findViewById(R.id.progressbar_login);
-        btnLogin = view.findViewById(R.id.btn_login);
-        tvUser = view.findViewById(R.id.tv_user);
+        mAuth = FirebaseAuth.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference().child("table_normal_users");
 
-        // set/ load data
+        // find view by id
+        txtName = view.findViewById(R.id.txt_userregister_name);
+        txtEmail = view.findViewById(R.id.txt_userregister_email);
+        txtPassword = view.findViewById(R.id.txt_userregister_password);
+        progressBar = view.findViewById(R.id.progressbar_userregister);
+        btnRegister = view.findViewById(R.id.btn_userregister);
+
+        // set / load data
 
 
         // listeners
-        btnLogin.setOnClickListener(loginListener);
-        tvLogintoregister.setOnClickListener(registerListener);
-        tvUser.setOnClickListener(userListener);
+        btnRegister.setOnClickListener(registerListener);
 
         return view;
     }
 
 
-    private View.OnClickListener loginListener = new View.OnClickListener() {
+    private View.OnClickListener registerListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (login(txtEmail, txtPassword)){
-                String email = txtEmail.getText().toString().trim();
-                String password = txtPassword.getText().toString().trim();
+            String name = txtName.getText().toString().trim();
+            if (name.isEmpty()) {
+                txtName.setError("TextField is empty");
+            } else {
+                txtName.setError(null);
 
-                loginUser(email, password);
+                if (create(txtEmail, txtPassword)) {
+                    String email = txtEmail.getText().toString().trim();
+                    String password = txtPassword.getText().toString().trim();
+
+                    NormalUser user = new NormalUser(name, email);
+
+                    reference.push().setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+
+                                register(email, password);
+
+                            } else {
+                                Toast.makeText(getContext(), "Error saving data", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
             }
         }
     };
 
-    private View.OnClickListener userListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Navigation.findNavController(view).navigate(R.id.navigateToUserLogin);
-        }
-    };
 
-    private View.OnClickListener registerListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Navigation.findNavController(view).navigate(R.id.navigateToRegistration);
-        }
-    };
-
-    private boolean login(EditText txtMail, ShowHidePasswordEditText txtPass) {
+    private boolean create(EditText txtMail, ShowHidePasswordEditText txtPass) {
         boolean valid = false;
 
         String email = txtMail.getText().toString().trim();
@@ -152,28 +157,25 @@ public class LoginFragment extends Fragment {
         return valid;
     }
 
-    private void loginUser(String email, String password) {
+    private void register(String email, String password) {
         progressBar.setVisibility(View.VISIBLE);
-        mAuth.signInWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("Login", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                             progressBar.setVisibility(View.GONE);
 
-                            Toast.makeText(getContext(), "Sucessful login", Toast.LENGTH_SHORT).show();
-                            Navigation.findNavController(view).navigate(R.id.navigateToSelectFromLogin);
+                            Toast.makeText(getContext(), "Sucessful Registration", Toast.LENGTH_SHORT).show();
+
+                            Navigation.findNavController(view).navigate(R.id.navigateToSelectFromRegistration);
                         } else {
                             progressBar.setVisibility(View.GONE);
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(getContext(), "Invalid User Credentials.", Toast.LENGTH_SHORT).show();
-                                updateUI(null);
-                            } else if (task.getException() instanceof FirebaseAuthInvalidUserException) {
-                                Toast.makeText(getContext(), "Email does not exist", Toast.LENGTH_SHORT).show();
+                            if (task.getException() instanceof FirebaseAuthWeakPasswordException) {
+                                Toast.makeText(getContext(), "Weak Password", Toast.LENGTH_SHORT).show();
                                 updateUI(null);
                             }
                         }
@@ -181,7 +183,7 @@ public class LoginFragment extends Fragment {
                 });
     }
 
-    public void updateUI(FirebaseUser account) {
+    private void updateUI(FirebaseUser account) {
 
         if (account != null) {
             Toast.makeText(getContext(), "U Signed In successfully", Toast.LENGTH_LONG).show();
@@ -191,4 +193,5 @@ public class LoginFragment extends Fragment {
         }
 
     }
+
 }
