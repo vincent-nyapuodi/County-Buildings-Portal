@@ -371,6 +371,12 @@ public class DocumentsFragment extends Fragment {
                     firesafetyLoad();
                     sanitationLoad();
                     inspectionLoad();
+
+                    checkComments(feedbackreference, buildingcode,"kra", tvKraFeedback);
+                    checkComments(feedbackreference, buildingcode, "nema", tvNemaFeedback);
+                    checkComments(feedbackreference, buildingcode, "sanitation", tvSanitationFeedback);
+                    checkComments(feedbackreference, buildingcode, "firesafety", tvFireSafetyFeedback);
+                    checkComments(feedbackreference, buildingcode, "inspection", tvInspectionFeedback);
                 }
             }
 
@@ -394,12 +400,6 @@ public class DocumentsFragment extends Fragment {
 
             }
         });
-
-        checkComments(feedbackreference, "kra", tvKraFeedback);
-        checkComments(feedbackreference, "nema", tvNemaFeedback);
-        checkComments(feedbackreference, "sanitation", tvSanitationFeedback);
-        checkComments(feedbackreference, "firesafety", tvFireSafetyFeedback);
-        checkComments(feedbackreference, "inspection", tvInspectionFeedback);
     }
 
 
@@ -598,7 +598,7 @@ public class DocumentsFragment extends Fragment {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(getContext(), "Uploaded " + chooser + " successfully", Toast.LENGTH_SHORT).show();
                                                 tvContext.setVisibility(View.VISIBLE);
-                                                tvContext.setText("Approved");
+                                                tvContext.setText("Uploaded");
                                                 pd.dismiss();
                                             } else {
                                                 pd.dismiss();
@@ -627,12 +627,14 @@ public class DocumentsFragment extends Fragment {
         }
     }
 
-    private void checkComments(DatabaseReference reference, String certificate, TextView tvFeedback){
+    private void checkComments(DatabaseReference reference, String buildingcode, String certificate, TextView tvFeedback) {
         reference.orderByChild("buildingcode_certificate").equalTo(buildingcode + "_" + certificate).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if (snapshot != null) {
+                if (snapshot.exists()) {
                     tvFeedback.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(getContext(), "Does not exist", Toast.LENGTH_SHORT).show();
                 }
             }
 
