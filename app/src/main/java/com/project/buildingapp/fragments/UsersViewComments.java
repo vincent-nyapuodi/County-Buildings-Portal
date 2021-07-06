@@ -61,7 +61,7 @@ public class UsersViewComments extends Fragment {
     private void loadData() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         options = new FirebaseRecyclerOptions.Builder<PublicComments>()
-                .setQuery(reference, PublicComments.class)
+                .setQuery(reference.orderByChild("buildingcode").equalTo(buildingcode), PublicComments.class)
                 .build();
 
         adapter = new UsersViewCommentAdapter(options, getContext());
