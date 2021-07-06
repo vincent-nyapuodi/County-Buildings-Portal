@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,7 +116,7 @@ public class UserRegisterFragment extends Fragment {
         validate.setEmail(email);
         validate.setPassword(password);
 
-        switch (validate.validateEmail()){
+        switch (validate.validateEmail()) {
             case 0:
                 txtMail.setError("Text field is empty");
                 txtMail.setFocusable(true);
@@ -171,7 +172,7 @@ public class UserRegisterFragment extends Fragment {
 
                             Toast.makeText(getContext(), "Sucessful Registration", Toast.LENGTH_SHORT).show();
 
-                            Navigation.findNavController(view).navigate(R.id.navigateToSelectFromRegistration);
+                            NavHostFragment.findNavController(getParentFragment()).navigate(R.id.navigateToUserHomeFromRegistration);
                         } else {
                             progressBar.setVisibility(View.GONE);
                             if (task.getException() instanceof FirebaseAuthWeakPasswordException) {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,7 +49,7 @@ public class UserLoginFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_user_login, container, false);
 
         // set
-        ((BottomNavLocker)getActivity()).BottomNavLocked(true);
+        ((BottomNavLocker) getActivity()).BottomNavLocked(true);
 
         validate = new ValidationsClass();
 
@@ -77,7 +78,7 @@ public class UserLoginFragment extends Fragment {
     private View.OnClickListener loginListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (login(txtEmail, txtPassword)){
+            if (login(txtEmail, txtPassword)) {
                 String email = txtEmail.getText().toString().trim();
                 String password = txtPassword.getText().toString().trim();
 
@@ -89,7 +90,7 @@ public class UserLoginFragment extends Fragment {
     private View.OnClickListener registerListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            NavHostFragment.findNavController(getParentFragment()).navigate(R.id.navigateToUserRegistration);
         }
     };
 
@@ -102,7 +103,7 @@ public class UserLoginFragment extends Fragment {
         validate.setEmail(email);
         validate.setPassword(password);
 
-        switch (validate.validateEmail()){
+        switch (validate.validateEmail()) {
             case 0:
                 txtMail.setError("Text field is empty");
                 txtMail.setFocusable(true);
@@ -158,7 +159,7 @@ public class UserLoginFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
 
                             Toast.makeText(getContext(), "Sucessful login", Toast.LENGTH_SHORT).show();
-                            Navigation.findNavController(view).navigate(R.id.navigateToSelectFromLogin);
+                            NavHostFragment.findNavController(getParentFragment()).navigate(R.id.navigateToUserHome);
                         } else {
                             progressBar.setVisibility(View.GONE);
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

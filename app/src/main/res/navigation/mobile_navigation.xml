@@ -240,6 +240,12 @@
         <action
             android:id="@+id/action_userHomeFragment_to_buildingDetailsFragment"
             app:destination="@id/buildingDetailsFragment" />
+        <action
+            android:id="@+id/navigateToLoginFromUserHome"
+            app:destination="@id/loginFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/userHomeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/buildingDetailsFragment"
@@ -283,10 +289,28 @@
     <fragment
         android:id="@+id/userLoginFragment"
         android:name="com.project.buildingapp.fragments.UserLoginFragment"
-        android:label="fragment_user_login"
-        tools:layout="@layout/fragment_user_login" >
+        android:label="User Login"
+        tools:layout="@layout/fragment_user_login">
         <action
             android:id="@+id/navigateToUserHome"
-            app:destination="@id/userHomeFragment" />
+            app:destination="@id/userHomeFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/userLoginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/navigateToUserRegistration"
+            app:destination="@id/userRegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userRegisterFragment"
+        android:name="com.project.buildingapp.fragments.UserRegisterFragment"
+        android:label="User Registration"
+        tools:layout="@layout/fragment_user_register" >
+        <action
+            android:id="@+id/navigateToUserHomeFromRegistration"
+            app:destination="@id/userHomeFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/userRegisterFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

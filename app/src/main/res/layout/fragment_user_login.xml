@@ -68,19 +68,6 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tv_userloginto_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerInParent="true"
-        android:text="Register"
-        android:textColor="@color/purple_700"
-        android:textSize="@dimen/text_medium"
-        android:textStyle="normal"
-        android:layout_marginBottom="@dimen/spacing_5"/>
-
-
     <Button
         android:id="@+id/btn_userlogin"
         android:layout_width="@dimen/btn_long_width"
@@ -93,5 +80,17 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_medium"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_userloginto_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:text="Register"
+        android:textColor="@color/purple_700"
+        android:textSize="@dimen/text_medium"
+        android:textStyle="normal"
+        android:layout_marginBottom="@dimen/spacing_5"/>
 
 </LinearLayout>

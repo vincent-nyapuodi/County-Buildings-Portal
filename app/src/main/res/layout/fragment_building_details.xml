@@ -173,11 +173,21 @@
                                 android:id="@+id/img_certifications_kraverification"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerInParent="true"
+                                android:layout_marginLeft="@dimen/spacing_2"
+                                android:layout_toRightOf="@+id/tv_certifications_kra"
                                 android:src="@drawable/ic_baseline_verified_24"
                                 android:visibility="gone"
                                 app:tint="@color/darkgreen" />
+
+                            <ImageView
+                                android:id="@+id/img_kra_download"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerInParent="true"
+                                android:padding="@dimen/padding_x_small"
+                                android:src="@drawable/ic_baseline_cloud_download_24"
+                                app:tint="@color/darkgray" />
 
                         </RelativeLayout>
 
@@ -218,13 +228,23 @@
 
                             <ImageView
                                 android:id="@+id/img_certifications_nemaverification"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="@dimen/spacing_2"
+                                android:layout_toRightOf="@+id/tv_certifications_nema"
+                                android:src="@drawable/ic_baseline_verified_24"
+                                android:visibility="gone"
+                                app:tint="@color/darkgreen" />
+
+                            <ImageView
+                                android:id="@+id/img_nema_download"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerInParent="true"
-                                android:src="@drawable/ic_baseline_verified_24"
-                                android:visibility="gone"
-                                app:tint="@color/darkgreen" />
+                                android:padding="@dimen/padding_x_small"
+                                android:src="@drawable/ic_baseline_cloud_download_24"
+                                app:tint="@color/darkgray" />
 
                         </RelativeLayout>
 
@@ -265,13 +285,23 @@
 
                             <ImageView
                                 android:id="@+id/img_certifications_firesafetyverification"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="@dimen/spacing_2"
+                                android:layout_toRightOf="@+id/tv_certifications_firesafety"
+                                android:src="@drawable/ic_baseline_verified_24"
+                                android:visibility="gone"
+                                app:tint="@color/darkgreen" />
+
+                            <ImageView
+                                android:id="@+id/img_firesafety_download"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerInParent="true"
-                                android:src="@drawable/ic_baseline_verified_24"
-                                android:visibility="gone"
-                                app:tint="@color/darkgreen" />
+                                android:padding="@dimen/padding_x_small"
+                                android:src="@drawable/ic_baseline_cloud_download_24"
+                                app:tint="@color/darkgray" />
 
                         </RelativeLayout>
 
@@ -312,13 +342,23 @@
 
                             <ImageView
                                 android:id="@+id/img_certifications_sanitationverification"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="@dimen/spacing_2"
+                                android:layout_toRightOf="@+id/tv_certifications_sanitation"
+                                android:src="@drawable/ic_baseline_verified_24"
+                                android:visibility="gone"
+                                app:tint="@color/darkgreen" />
+
+                            <ImageView
+                                android:id="@+id/img_sanitation_download"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerInParent="true"
-                                android:src="@drawable/ic_baseline_verified_24"
-                                android:visibility="gone"
-                                app:tint="@color/darkgreen" />
+                                android:padding="@dimen/padding_x_small"
+                                android:src="@drawable/ic_baseline_cloud_download_24"
+                                app:tint="@color/darkgray" />
 
                         </RelativeLayout>
 
@@ -359,13 +399,23 @@
 
                             <ImageView
                                 android:id="@+id/img_certifications_inspectionverification"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="@dimen/spacing_2"
+                                android:layout_toRightOf="@+id/tv_certifications_inspection"
+                                android:src="@drawable/ic_baseline_verified_24"
+                                android:visibility="gone"
+                                app:tint="@color/darkgreen" />
+
+                            <ImageView
+                                android:id="@+id/img_inspection_download"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerInParent="true"
-                                android:src="@drawable/ic_baseline_verified_24"
-                                android:visibility="gone"
-                                app:tint="@color/darkgreen" />
+                                android:padding="@dimen/padding_x_small"
+                                android:src="@drawable/ic_baseline_cloud_download_24"
+                                app:tint="@color/darkgray" />
 
                         </RelativeLayout>
 
@@ -382,6 +432,51 @@
                             android:visibility="invisible" />
 
                     </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="@dimen/padding_small">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_user_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/spacing_2"
+                        android:padding="@dimen/padding"
+                        android:text="Comment"
+                        android:textColor="@color/darkgray"
+                        android:textSize="@dimen/text_medium_large"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/darkgray" />
+
+                    <TextView
+                        android:id="@+id/tv_user_viewcomments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/spacing_2"
+                        android:padding="@dimen/padding"
+                        android:text="View Comments"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="@dimen/text_medium_large"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 

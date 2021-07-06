@@ -146,4 +146,14 @@
         <item>Nyamira</item>
         <item>Nairobi City</item>
     </string-array>
+
+    <string-array name="comment_type">
+        <item>-- SELECT FEEDBACK TYPE --</item>
+        <item>Complaint</item>
+        <item>Remark</item>
+        <item>Notice</item>
+        <item>Anonymous</item>
+    </string-array>
+
+
 </resources>

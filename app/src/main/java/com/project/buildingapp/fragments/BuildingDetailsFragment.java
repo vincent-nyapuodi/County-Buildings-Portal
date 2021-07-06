@@ -1,19 +1,29 @@
 package com.project.buildingapp.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,8 +33,13 @@ import com.project.buildingapp.R;
 import com.project.buildingapp.models.Approval;
 import com.project.buildingapp.models.Building;
 import com.project.buildingapp.models.Certifications;
+import com.project.buildingapp.models.PublicComments;
 import com.project.buildingapp.utils.BottomNavLocker;
 import com.project.buildingapp.utils.ToolBarLocker;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.sql.Timestamp;
 
 public class BuildingDetailsFragment extends Fragment {
 
@@ -35,13 +50,16 @@ public class BuildingDetailsFragment extends Fragment {
     private TextView tvKraCertification, tvNemaCertification, tvFireSafetyCertification, tvSanitationCertification, tvInspectionCertification;
     private TextView tvKraContext, tvNemaContext, tvFireSafetyContext, tvSanitationContext, tvInspectionContext;
     private ImageView imgKra, imgNema, imgFireSafety, imgSanitation, imgInspection;
+    private TextView tvComment, tvViewComments;
+    private ImageView imgDownloadKra, imgDownloadNema, imgDownloadFireSafety, imgDownloadSanitation, imgDownloadInspection;
 
-    private String buildingrefkey, buildingcode, buildingname, buildinglocation, buildingimage, buildingemail, countyname;
+    private String buildingrefkey, buildingcode, buildingname, buildinglocation, buildingimage, buildingemail, countyname, email, time;
     private int status;
 
+    private FirebaseUser user;
     private BuildingDetailsFragmentArgs args;
 
-    private DatabaseReference buildingreference, certificationreference, approvalreference;
+    private DatabaseReference buildingreference, certificationreference, approvalreference, commentreference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +70,14 @@ public class BuildingDetailsFragment extends Fragment {
         ((ToolBarLocker) getActivity()).ToolBarLocked(false);
 
         args = BuildingDetailsFragmentArgs.fromBundle(getArguments());
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        email = user.getEmail();
+
+        commentreference = FirebaseDatabase.getInstance().getReference().child("table_public_comments");
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        time = timestamp.toString();
 
         buildingrefkey = args.getBuildingRefKey();
         buildingcode = args.getBuildingCode();
@@ -84,12 +110,28 @@ public class BuildingDetailsFragment extends Fragment {
         imgSanitation = view.findViewById(R.id.img_certifications_sanitationverification);
         imgInspection = view.findViewById(R.id.img_certifications_inspectionverification);
 
+        imgDownloadKra = view.findViewById(R.id.img_kra_download);
+        imgDownloadNema = view.findViewById(R.id.img_nema_download);
+        imgDownloadFireSafety = view.findViewById(R.id.img_firesafety_download);
+        imgDownloadSanitation = view.findViewById(R.id.img_sanitation_download);
+        imgDownloadInspection = view.findViewById(R.id.img_inspection_download);
+
+        tvComment = view.findViewById(R.id.tv_user_comment);
+        tvViewComments = view.findViewById(R.id.tv_user_viewcomments);
 
         // set / load data
         loadData();
 
         // listener
         tvProfileSeeMore.setOnClickListener(seemoreListener);
+        imgDownloadKra.setOnClickListener(kraListener);
+        imgDownloadNema.setOnClickListener(kraListener);
+        imgDownloadFireSafety.setOnClickListener(firesafetyListener);
+        imgDownloadSanitation.setOnClickListener(sanitationListener);
+        imgDownloadInspection.setOnClickListener(inspectionListener);
+
+        tvComment.setOnClickListener(commentListener);
+        tvViewComments.setOnClickListener(viewCommentsListener);
 
         return view;
     }
@@ -104,6 +146,112 @@ public class BuildingDetailsFragment extends Fragment {
         }
     };
 
+    private View.OnClickListener commentListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+            builder.setTitle("Feedback");
+            final View customLayout = requireActivity().getLayoutInflater().inflate(R.layout.list_comment, null);
+
+            Spinner spinner = customLayout.findViewById(R.id.spinner_commenttype);
+            EditText txtComment = customLayout.findViewById(R.id.txt_comment);
+
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                    R.array.comment_type, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+
+            builder.setView(customLayout)
+                    .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            String commenttext = txtComment.getText().toString().trim();
+                            String commenttype = spinner.getSelectedItem().toString();
+
+                            if (commenttext.isEmpty()) {
+                                Toast.makeText(getContext(), "Text field is empty", Toast.LENGTH_SHORT).show();
+                            } else if (commenttype.equals("-- SELECT FEEDBACK TYPE --")) {
+                                Toast.makeText(getContext(), "Select Comment type", Toast.LENGTH_SHORT).show();
+                            } else {
+                                PublicComments comments = new PublicComments(
+                                        buildingcode,
+                                        email,
+                                        buildingcode + "_" + email,
+                                        commenttype,
+                                        commenttext,
+                                        time
+                                );
+
+                                commentreference.push().setValue(comments).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getContext(), "Successful", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                        } else {
+                                            Toast.makeText(getContext(), "Error sending data", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    };
+
+    private View.OnClickListener viewCommentsListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+
+    private View.OnClickListener kraListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+    private View.OnClickListener nemaListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+    private View.OnClickListener sanitationListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+    private View.OnClickListener firesafetyListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+    private View.OnClickListener inspectionListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
 
     private void loadData() {
         buildingreference.orderByKey().equalTo(buildingrefkey).addChildEventListener(new ChildEventListener() {
@@ -158,7 +306,8 @@ public class BuildingDetailsFragment extends Fragment {
         loadApprovalData(approvalreference, buildingcode, "inspection", tvInspectionContext);
     }
 
-    private void loadCertificationData(DatabaseReference reference, String buildingcode, String certification, ImageView imageView) {
+    private void loadCertificationData(DatabaseReference reference, String
+            buildingcode, String certification, ImageView imageView) {
         reference.orderByChild("buildingcode_certificate").equalTo(buildingcode + "_" + certification).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -195,7 +344,8 @@ public class BuildingDetailsFragment extends Fragment {
         });
     }
 
-    private void loadApprovalData(DatabaseReference reference, String buildingcode, String certificate, TextView textView) {
+    private void loadApprovalData(DatabaseReference reference, String buildingcode, String
+            certificate, TextView textView) {
         reference.orderByChild("buildingcode_certificate").equalTo(buildingcode + "_" + certificate).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

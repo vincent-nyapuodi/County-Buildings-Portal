@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_small">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_3"
+        android:text="Comment type"
+        android:textColor="@color/darkgray"
+        android:textSize="@dimen/text_medium_large"
+        android:textStyle="normal" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_commenttype"
+        android:spinnerMode="dropdown"
+        android:layout_marginBottom="@dimen/spacing_2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_3"
+        android:text="Comment"
+        android:textColor="@color/darkgray"
+        android:textSize="@dimen/text_medium_large"
+        android:textStyle="normal" />
+
+    <EditText
+        android:id="@+id/txt_comment"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@android:drawable/edit_text"
+        android:gravity="top|left"
+        android:hint="Write your comments here"
+        android:inputType="text|textMultiLine"
+        android:padding="@dimen/padding_small" />
+
+</LinearLayout>
