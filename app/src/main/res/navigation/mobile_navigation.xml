@@ -261,6 +261,9 @@
         <action
             android:id="@+id/action_buildingDetailsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/navigateToUsersComments"
+            app:destination="@id/usersViewComments" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -312,5 +315,14 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/userRegisterFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/usersViewComments"
+        android:name="com.project.buildingapp.fragments.UsersViewComments"
+        android:label="View Feedback"
+        tools:layout="@layout/fragment_users_view_comments" >
+        <argument
+            android:name="building_code"
+            app:argType="string" />
     </fragment>
 </navigation>

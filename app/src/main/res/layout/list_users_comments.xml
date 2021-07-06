@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="@dimen/padding_small">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_viewcomments_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/spacing_2"
+            android:layout_marginBottom="@dimen/spacing_2"
+            android:text="27/08/2021"
+            android:textColor="@color/darkgray"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/tv_viewcomments_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_3"
+            android:text="This is the best"
+            android:textColor="@color/darkgray"
+            android:textSize="@dimen/text_medium_small"
+            android:textStyle="normal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_3">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_2"
+                android:layout_marginRight="@dimen/spacing_2"
+                android:src="@drawable/ic_baseline_ball_24"
+                app:tint="@color/mediumgray" />
+
+            <TextView
+                android:id="@+id/tv_viewcomments_commenttype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="Remark"
+                android:textColor="@color/darkgray"
+                android:textSize="@dimen/text_medium_small"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

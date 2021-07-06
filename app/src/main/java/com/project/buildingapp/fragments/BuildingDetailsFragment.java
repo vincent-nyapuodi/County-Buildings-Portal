@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -213,7 +214,9 @@ public class BuildingDetailsFragment extends Fragment {
     private View.OnClickListener viewCommentsListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            BuildingDetailsFragmentDirections.NavigateToUsersComments action
+                    = BuildingDetailsFragmentDirections.navigateToUsersComments(buildingcode);
+            NavHostFragment.findNavController(getParentFragment()).navigate(action);
         }
     };
 
