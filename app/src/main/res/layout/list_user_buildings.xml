@@ -51,6 +51,7 @@
             android:drawableLeft="@drawable/ic_baseline_location_24"
             android:drawablePadding="@dimen/spacing_1"
             android:drawableTint="@color/darkgray"
+            android:padding="@dimen/padding_small"
             android:textColor="@color/darkgray"
             android:textSize="@dimen/text_small"
             android:textStyle="bold" />

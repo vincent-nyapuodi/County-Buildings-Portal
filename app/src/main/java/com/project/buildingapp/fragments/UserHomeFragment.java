@@ -79,7 +79,7 @@ public class UserHomeFragment extends Fragment {
                 .setQuery(reference, Building.class)
                 .build();
 
-        adapter = new UserBuildings(options, getContext());
+        adapter = new UserBuildings(options, getActivity());
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }

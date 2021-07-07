@@ -1,6 +1,8 @@
 package com.project.buildingapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +76,20 @@ public class UserBuildings extends FirebaseRecyclerAdapter<Building, UserBuildin
         tvBuildingName.setText(model.getBuildingname());
         tvBuildingResidence.setText(residencetype + " residence | " + type);
         tvBuildingLocation.setText(model.getBuildingtown() + ", " + model.getBuildingcounty());
+
+        tvBuildingLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q="+ model.getBuildingtown() +", " + model.getBuildingcounty());
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(mapIntent);
+                }
+
+
+            }
+        });
 
         lytBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
