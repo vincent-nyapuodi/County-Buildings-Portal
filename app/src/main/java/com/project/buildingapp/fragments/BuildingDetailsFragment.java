@@ -1,6 +1,9 @@
 package com.project.buildingapp.fragments;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +35,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.project.buildingapp.R;
 import com.project.buildingapp.models.Approval;
 import com.project.buildingapp.models.Building;
@@ -40,6 +47,7 @@ import com.project.buildingapp.utils.ToolBarLocker;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.sql.Timestamp;
 
 public class BuildingDetailsFragment extends Fragment {
@@ -62,6 +70,9 @@ public class BuildingDetailsFragment extends Fragment {
 
     private DatabaseReference buildingreference, certificationreference, approvalreference, commentreference;
 
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_building_details, container, false);
@@ -75,8 +86,6 @@ public class BuildingDetailsFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         email = user.getEmail();
 
-        commentreference = FirebaseDatabase.getInstance().getReference().child("table_public_comments");
-
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         time = timestamp.toString();
 
@@ -86,6 +95,10 @@ public class BuildingDetailsFragment extends Fragment {
         buildingreference = FirebaseDatabase.getInstance().getReference().child("table_building");
         certificationreference = FirebaseDatabase.getInstance().getReference().child("table_certification");
         approvalreference = FirebaseDatabase.getInstance().getReference().child("table_approval");
+        commentreference = FirebaseDatabase.getInstance().getReference().child("table_public_comments");
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         // find view by id
         tvBuildingName = view.findViewById(R.id.tv_profile_buildingname);
@@ -224,35 +237,35 @@ public class BuildingDetailsFragment extends Fragment {
     private View.OnClickListener kraListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            download(buildingcode, "kra");
         }
     };
 
     private View.OnClickListener nemaListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            download(buildingcode, "nema");
         }
     };
 
     private View.OnClickListener sanitationListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            download(buildingcode, "sanitation");
         }
     };
 
     private View.OnClickListener firesafetyListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            download(buildingcode, "firesafety");
         }
     };
 
     private View.OnClickListener inspectionListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            download(buildingcode, "inspection");
         }
     };
 
@@ -382,5 +395,107 @@ public class BuildingDetailsFragment extends Fragment {
 
             }
         });
+    }
+
+
+    private void download(String buildingcode, String certificate) {
+
+        final AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+        b.setTitle("Download");
+        b.setMessage("Are you sure?");
+        b.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                certificationreference.orderByChild("buildingcode_certificate").equalTo(buildingcode + "_" + certificate).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        String url = "";
+
+                        if (snapshot != null) {
+
+
+                            Certifications certifications = snapshot.getValue(Certifications.class);
+
+                            url = certifications.getCertificateurl();
+
+                            storageReference.child("BuildingCertifications/" + buildingcode + "/" + getFilename(Uri.parse(url))).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    downloadFile(getContext(), buildingcode + "_" + certificate + " certificate", "pdf", "/BuildingCertifications", uri.toString());
+
+                                    final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                    builder.setTitle("Download successful");
+                                    builder.setMessage(buildingcode + "_" + certificate + " certificate" +".pdf");
+                                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+                                        }
+                                    });
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getContext(), "Error message : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getContext(), "No file to be downloaded", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog d = b.create();
+        d.show();
+    }
+
+    public long downloadFile(Context context, String fileName, String fileExtension, String destinationDirectory, String url) {
+
+
+        DownloadManager downloadmanager = (DownloadManager) context.
+                getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalFilesDir(context, destinationDirectory, fileName + fileExtension);
+
+        return downloadmanager.enqueue(request);
+    }
+
+    private String getFilename(Uri uri) {
+        File file = new File(uri.getPath());
+        String displayName = file.getName();
+
+        return displayName;
     }
 }

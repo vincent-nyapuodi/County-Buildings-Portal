@@ -208,6 +208,9 @@
         <action
             android:id="@+id/navigateToFeedback"
             app:destination="@id/feedbackFragment" />
+        <action
+            android:id="@+id/navigateToPublicComments"
+            app:destination="@id/publicCommentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editFragment"
@@ -321,6 +324,15 @@
         android:name="com.project.buildingapp.fragments.UsersViewComments"
         android:label="View Feedback"
         tools:layout="@layout/fragment_users_view_comments" >
+        <argument
+            android:name="building_code"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/publicCommentsFragment"
+        android:name="com.project.buildingapp.fragments.PublicCommentsFragment"
+        android:label="Public Comments"
+        tools:layout="@layout/fragment_public_comments">
         <argument
             android:name="building_code"
             app:argType="string" />

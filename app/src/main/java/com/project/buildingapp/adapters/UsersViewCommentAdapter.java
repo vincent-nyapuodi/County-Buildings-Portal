@@ -55,8 +55,8 @@ public class UsersViewCommentAdapter extends FirebaseRecyclerAdapter<PublicComme
         }
 
         tvCommentDate.setText(formatdate);
-        tvCommentType.setText(model.getComment());
-        tvCommentContext.setText(model.getCommenttype());
+        tvCommentType.setText(model.getCommenttype());
+        tvCommentContext.setText(model.getComment());
     }
 
     @NonNull

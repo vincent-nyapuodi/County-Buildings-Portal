@@ -67,7 +67,7 @@ public class DocumentsFragment extends Fragment {
     private TextView tvKraFeedback, tvNemaFeedback, tvSanitationFeedback, tvFireSafetyFeedback, tvInspectionFeedback;  // TODO : made visible on upload / approve
     private ImageView imgKraPlus, imgNemaPlus, imgSanitationPlus, imgFireSafetyPlus, imgInspectionPlus; // TODO : switch btn minus and plus
     private ImageView imgKraUploadDoc, imgNemaUploadDoc, imgSanitationUploadDoc, imgFireSafetyUploadDoc, imgInspectionUploadDoc;
-    private TextView tvKraUploadDoc, tvNemaUploadDoc, tvSanitationUploadDoc, tvFireSafetyUploadDoc, tvInspectionUploadDoc;
+    private TextView tvKraUploadDoc, tvNemaUploadDoc, tvSanitationUploadDoc, tvFireSafetyUploadDoc, tvInspectionUploadDoc, tvPublicComments;
     private EditText txtKraCertification, txtNemaCertification, txtSanitationCertification, txtFireSafetyCertification, txtInspectionCertification;
     private Button btnKraUpload, btnNemaUpload, btnSanitationUpload, btnFireSafetyUpload, btnInspectionUpload;
 
@@ -154,6 +154,8 @@ public class DocumentsFragment extends Fragment {
         btnFireSafetyUpload = view.findViewById(R.id.btn_firesafety_upload);
         btnInspectionUpload = view.findViewById(R.id.btn_inspection_upload);
 
+        tvPublicComments = view.findViewById(R.id.tv_certifications_public_comments);
+
         // set / load data
         loadData();
 
@@ -182,8 +184,19 @@ public class DocumentsFragment extends Fragment {
         tvSanitationFeedback.setOnClickListener(sanitationFeedbackListener);
         tvInspectionFeedback.setOnClickListener(inspectionFeedbackListener);
 
+        tvPublicComments.setOnClickListener(publicCommentsListener);
+
         return view;
     }
+
+    private View.OnClickListener publicCommentsListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            DocumentsFragmentDirections.NavigateToPublicComments action
+                    = DocumentsFragmentDirections.navigateToPublicComments(buildingcode);
+            NavHostFragment.findNavController(getParentFragment()).navigate(action);
+        }
+    };
 
     private View.OnClickListener kraListener = new View.OnClickListener() {
         @Override
@@ -372,7 +385,7 @@ public class DocumentsFragment extends Fragment {
                     sanitationLoad();
                     inspectionLoad();
 
-                    checkComments(feedbackreference, buildingcode,"kra", tvKraFeedback);
+                    checkComments(feedbackreference, buildingcode, "kra", tvKraFeedback);
                     checkComments(feedbackreference, buildingcode, "nema", tvNemaFeedback);
                     checkComments(feedbackreference, buildingcode, "sanitation", tvSanitationFeedback);
                     checkComments(feedbackreference, buildingcode, "firesafety", tvFireSafetyFeedback);

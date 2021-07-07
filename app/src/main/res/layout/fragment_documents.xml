@@ -741,6 +741,29 @@
 
             </LinearLayout>
 
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="@dimen/spacing_2"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_certifications_public_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/spacing_1"
+                    android:text="Public Comments"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="@dimen/text_medium_large"
+                    android:textStyle="bold" />
+
+            </androidx.cardview.widget.CardView>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
